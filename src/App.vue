@@ -7,5 +7,5 @@ import AppHome from './components/AppHome.vue'
 </template>
 
 <style lang="scss">
-@use "./styles/general.scss" as *;
+@use "./style/general.scss" as *;
 </style>
