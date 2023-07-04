@@ -6,7 +6,7 @@ export default {
     data() {
         return {
             cookings: [],
-            restautants: [],
+            restaurants: [],
             store
         };
     },
@@ -16,7 +16,7 @@ export default {
     },
     methods: {
         getCookings() {
-            axios.get(`${store.apiBaseUrl}/api/cookings`).then((resp) => {
+            axios.get(`${store.apiBaseUrl}/api/cookingType`).then((resp) => {
                 this.cookings = resp.data.results;
             })
         }
@@ -27,6 +27,7 @@ export default {
 <template>
     <div class="container">
         <h2>Cosa ti va oggi?</h2>
+        <div v-for="cooking in cookings">{{ cooking.name }}</div>
 
         <!-- <router-link :to="{ name: 'home' }">Visualizza i tuoi progetti</router-link> -->
 
