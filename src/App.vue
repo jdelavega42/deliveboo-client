@@ -1,9 +1,18 @@
-<script setup>
-import AppHome from './components/AppHome.vue'
+<script >
+import HeaderMenu from './components/HeaderMenu.vue';
+
+export default {
+  components:
+    { HeaderMenu }
+}
+
 </script>
 
 <template>
-  <AppHome />
+  <HeaderMenu />
+  <h1 class="text-center m-2">asfhcvxb</h1>
+
+  <router-view />
 </template>
 
 <style lang="scss">
