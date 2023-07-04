@@ -1,11 +1,9 @@
-<script setup>
-import { ref } from 'vue'
+<script>
+
 </script>
 
 <template>
-<h1>Deliveboo</h1>
+    <h1>Deliveboo</h1>
 </template>
 
-<style scoped>
-
-</style>
+<style lang="scss" scoped></style>
