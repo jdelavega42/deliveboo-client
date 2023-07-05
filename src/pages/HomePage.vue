@@ -50,7 +50,7 @@ export default {
     <div class="container">
 
         <!-- COOKINGS TYPE -->
-        <h1 class="text-center">COSA TI VA OGGI?</h1>
+        <h1 class="text-center m-2">COSA TI VA OGGI?</h1>
         <div class="cookings-list d-flex row row-cols-4">
 
             <div class="col text-center" v-for="cooking in     cookings    ">
