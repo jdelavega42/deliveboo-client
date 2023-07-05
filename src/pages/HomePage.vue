@@ -50,7 +50,7 @@ export default {
     <div class="container">
 
         <!-- COOKINGS TYPE -->
-        <h2 class="text-center">COSA TI VA OGGI?</h2>
+        <h1 class="text-center">COSA TI VA OGGI?</h1>
         <div class="cookings-list d-flex row row-cols-4">
 
             <div class="col text-center" v-for="cooking in cookings">
@@ -63,7 +63,7 @@ export default {
         <!-- RESTAURANTS LIST -->
         <div class="restaurant-list" v-if="loading != null">
 
-            <h2 class="text-center">I nostri ristoranti</h2>
+            <h1 class="text-center mt-4">I nostri ristoranti</h1>
 
             <div v-if="loading" class="text-center">CARICAMENTO</div>
 
@@ -82,14 +82,17 @@ export default {
 @use "../style/general.scss" as *;
 @use "../style/partials/variables" as *;
 
-h2 {
+h1 {
 
     color: $primary-green;
+    font-weight: bold;
 
 }
 
 .cooking-type {
     color: white;
     background-color: $primary-red;
+    text-transform: capitalize;
+    font-size: 1.5rem;
 }
 </style>

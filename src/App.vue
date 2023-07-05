@@ -10,8 +10,6 @@ export default {
 
 <template>
   <HeaderMenu />
-  <h1 class="text-center m-2">asfhcvxb</h1>
-
   <router-view />
 </template>
 
