@@ -1,4 +1,6 @@
 <script >
+import "/node_modules/@fortawesome/fontawesome-free/css/all.css";
+
 import HeaderMenu from './components/HeaderMenu.vue';
 
 export default {
