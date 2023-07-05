@@ -53,15 +53,17 @@ export default {
         <h1 class="text-center">COSA TI VA OGGI?</h1>
         <div class="cookings-list d-flex row row-cols-4">
 
-            <div class="col text-center" v-for="cooking in cookings">
-                <div class="cooking-type p-3 m-3 rounded" role='button' @click="cookingType = cooking, getRestaurants()">{{
-                    cooking.name }}</div>
+            <div class="col text-center" v-for="cooking in     cookings    ">
+                <div class="cooking-type p-3 m-3 rounded"
+                    :class="{ 'bg-red': cookingType && cookingType.name === cooking.name }" role='button'
+                    @click="cookingType = cooking, getRestaurants()">{{
+                        cooking.name }}</div>
             </div>
         </div>
 
 
         <!-- RESTAURANTS LIST -->
-        <div class="restaurant-list" v-if="loading != null">
+        <div class="restaurants-list" v-if="loading != null">
 
             <h1 class="text-center mt-4">I nostri ristoranti</h1>
 
@@ -69,7 +71,16 @@ export default {
 
 
             <div>{{ message }}</div>
-            <div v-for="restaurant in restaurants">{{ restaurant.name }}</div>
+
+            <div class="restaurants-list d-flex row row-cols-4">
+                <div class="col text-center" v-for="    restaurant     in     restaurants    ">
+                    <div class="restaurant p-3 m-3 rounded" role='button'>{{
+                        restaurant.name }}</div>
+
+                    <div v-for="cooking in restaurant.cookings"> {{ cooking }} </div>
+                </div>
+            </div>
+
 
 
             <!-- <router-link :to="{ name: 'home' }">Visualizza i tuoi progetti</router-link> -->
@@ -89,10 +100,37 @@ h1 {
 
 }
 
-.cooking-type {
+.cookings-list {
+    color: $primary-red;
+
+
+    .cooking-type {
+        border: 2px solid $primary-red;
+        text-transform: capitalize;
+        font-size: 1.5rem;
+
+    }
+
+    .bg-red {
+        color: white;
+        background-color: $primary-red;
+    }
+}
+
+
+.cooking-type:hover {
     color: white;
     background-color: $primary-red;
-    text-transform: capitalize;
-    font-size: 1.5rem;
+
+}
+
+.restaurant {
+    box-sizing: border-box;
+    border: 2px solid white;
+
+}
+
+.restaurant:hover {
+    border-color: $primary-red;
 }
 </style>
