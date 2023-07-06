@@ -86,6 +86,7 @@ export default {
 
 
         </div>
+        <router-link :to="{ name: 'restaurant' }">Visualizza i tuoi progetti</router-link>
 
     </div>
 </template>
