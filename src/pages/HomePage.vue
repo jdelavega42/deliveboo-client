@@ -73,20 +73,18 @@ export default {
             <h2 class="text-center">{{ message }}</h2>
 
             <div class="restaurants-list d-flex row row-cols-4">
-                <div class="col m-3 text-center restaurant rounded" role='button'
+                <router-link :to="{ name: 'restaurant' }" class="col m-3 text-center restaurant rounded" role='button'
                     v-for="    restaurant     in     restaurants    ">
-                    <div class="" role='button'>{{
-                        restaurant.name }}</div>
+                    <div>{{ restaurant.name }}</div>
 
                     <div class="cookings" v-for="cooking in restaurant.cookings"> {{ cooking.name }} </div>
-                </div>
+                </router-link>
             </div>
 
 
 
 
         </div>
-        <router-link :to="{ name: 'restaurant' }">Visualizza i tuoi progetti</router-link>
 
     </div>
 </template>
@@ -137,6 +135,7 @@ h2 {
     border: 2px solid $primary-red;
     text-transform: capitalize;
     font-size: 1.5rem;
+    text-decoration: none;
 
     .cookings {
         font-size: 1rem;
