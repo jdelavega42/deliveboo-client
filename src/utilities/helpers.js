@@ -28,11 +28,13 @@ function updateCart(state, cart) {
 // aggiungere una funzione per moltiplicare il prezzo di un prodotto per la sua quantità nel carrello
 function productMultiplier(){
     //
+    console.log('productMultiplier');
 };
 
 // aggiungere una funzione per sommare il totale dei prodotti nel carrello
 function totalCart(){
     //
+    console.log('totalCart');
 }
 export {
     updateProducts,

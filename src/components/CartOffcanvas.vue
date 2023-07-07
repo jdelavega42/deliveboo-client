@@ -1,11 +1,23 @@
 <script>
 import { store } from '../store';
+import { updateProducts, addToCart, removeFromCart, updateOrder, updateCart, productMultiplier, totalCart } from '../utilities/helpers';
 export default {
     name: "CartOffcanvas",
     data() {
         return {
-            store
+            store,
+            updateProducts,
+            addToCart,
+            removeFromCart,
+            updateOrder,
+            updateCart,
+            productMultiplier,
+            totalCart
         }
+    },
+    mounted(){
+        this.productMultiplier(),
+        this.totalCart()
     }
 }
 </script>
@@ -74,7 +86,7 @@ export default {
                                             <i class="fas fa-minus"></i>
                                         </button>
 
-                                        <input id="form1" min="1" name="quantity" value="2" type="number"
+                                        <input min="1" name="quantity" value="2" type="number"
                                             class="text-center form-control form-control-sm" />
 
                                         <button class="btn btn-link px-2"
@@ -105,7 +117,7 @@ export default {
                                             <i class="fas fa-minus"></i>
                                         </button>
 
-                                        <input id="form1" min="1" name="quantity" value="2" type="number"
+                                        <input min="1" name="quantity" value="2" type="number"
                                             class="text-center form-control form-control-sm" />
 
                                         <button class="btn btn-link px-2"
@@ -136,7 +148,7 @@ export default {
                                             <i class="fas fa-minus"></i>
                                         </button>
 
-                                        <input id="form1" min="1" name="quantity" value="2" type="number"
+                                        <input min="1" name="quantity" value="2" type="number"
                                             class="text-center form-control form-control-sm" />
 
                                         <button class="btn btn-link px-2"
