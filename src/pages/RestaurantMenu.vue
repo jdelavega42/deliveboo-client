@@ -7,6 +7,22 @@ export default {
         return {
             restaurant: null,
             errorMessage: "",
+            products: [
+                {
+                    id: 1,
+                    name: "Prodotto 1",
+                    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas sed dignissimos tempora quasi libero voluptas laborum dolorem itaque deleniti quaerat est, accusantium numquam harum, saepe, veniam cumque? Incidunt, reiciendis illum.",
+                    price: 12.00,
+                    quantity: 0
+                },
+                {
+                    id: 2,
+                    name: "Prodotto 2",
+                    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas sed dignissimos tempora quasi libero voluptas laborum dolorem itaque deleniti quaerat est, accusantium numquam harum, saepe, veniam cumque? Incidunt, reiciendis illum. shfavfbHASFAHSBDIUFDASDUGHVBUJS<DHAHBGVUJASEHGUAWENVUIUAWEIWH",
+                    price: 14.00,
+                    quantity: 0
+                },
+            ],
             store
         };
     },
@@ -21,6 +37,22 @@ export default {
                 this.errorMessage = `${slug} non è un ristorante`
             }
         });
+    },
+    methods: {
+
+        increment(id) {
+            let numberInput = document.getElementById("number-" + id);
+            let currentValue = parseInt(numberInput.value);
+            numberInput.value = currentValue + 1;
+        },
+
+        decrement(id) {
+            let numberInput = document.getElementById("number-" + id);
+            let currentValue = parseInt(numberInput.value);
+            if (currentValue > 1) {
+                numberInput.value = currentValue - 1;
+            }
+        }
     }
 
 }
@@ -81,9 +113,43 @@ export default {
 
         </div>
         <!-- MENU -->
+        <h2 class="text-center mt-3">I nostri prodotti</h2>
         <div class="menu d-flex flex-column align-items-center">
-            <div class="single-product w-75">
+            <div class="single-product rounded m-2 d-flex justify-content-around align-items-center"
+                v-for="product in products">
+                <div class="images">
+                    <img class="rounded" src="../assets/img/pizza_ph.jpg" alt="">
+                </div>
+                <div class="info d-flex flex-column h-100 justify-content-around">
+                    <div class="name mt-2">{{ product.name }}</div>
+                    <div class="description">{{ product.description }}</div>
+                    <div class="price my-2 me-3 align-self-end">
+                        Prezzo {{ product.price }} $
+                    </div>
+                </div>
+                <div class="cart-section  d-flex flex-column h-100 justify-content-around h-100">
 
+                    <div class="text-center " for="number">Quantità:
+                    </div>
+                    <div class=" position-relative quantity-form">
+
+                        <div class="d-flex align-items-center h-100">
+                            <div class="p-2" @click="decrement(product.id)"><i class="fa-solid fa-minus"></i></div>
+                            <input type="number" :id="'number-' + product.id" class="quantity-number form-control"
+                                name="number" :value="product.quantity">
+
+                            <div class="p-2" @click="increment(product.id)"><i class="fa-solid fa-plus"></i></div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="text-center">
+                        Aggiungi al carrello <i class="fa-solid fa-cart-plus"></i>
+                    </div>
+
+
+                </div>
             </div>
         </div>
     </div>
@@ -92,6 +158,8 @@ export default {
 <style lang="scss" scoped>
 @use "../style/general.scss" as *;
 @use "../style/partials/variables" as *;
+
+
 
 .restaurant-info {
 
@@ -113,8 +181,48 @@ export default {
 
 }
 
+h2 {
+    color: $primary-green;
+    font-weight: bold;
+}
+
 .single-product {
-    height: 100px;
-    background-color: red;
+    height: 140px;
+    border: 2px solid $primary-red;
+    width: 85%;
+
+    .images {
+        height: 90%;
+
+        img {
+            height: 100%;
+            max-width: 170px;
+        }
+    }
+
+    .info {
+        width: 65%;
+
+        .name {
+            font-size: 1.2rem;
+        }
+    }
+
+    .cart-section {
+        height: 90%;
+        width: 15%;
+        // background-color: yellow;
+
+        .quantity-form {}
+    }
+}
+
+
+// PER NON MOSTRARE LA BARRA CHE INCREMENTA I NUMERI
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    display: none;
 }
 </style>
