@@ -10,6 +10,7 @@ export default {
             cookingType: null,
             loading: null,
             message: null,
+            params: null,
             store
         };
     },
@@ -27,8 +28,9 @@ export default {
             this.message = null;
             this.loading = true;
             this.restaurants = [];
+            this.params = [];
 
-            axios.get(`${store.apiBaseUrl}/api/filtered_restaurant/` + this.cookingType.name).then((resp) => {
+            axios.get(`${store.apiBaseUrl}/api/restaurants/` + this.cookingType.name).then((resp) => {
                 this.restaurants = resp.data.results;
             }).finally(() => {
                 this.loading = false;
