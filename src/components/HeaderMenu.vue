@@ -16,7 +16,11 @@ export default {
                     <li class="p-2"><a href="http://localhost:8000">Sei un ristoratore?</a></li>
                     <li class="p-2"><a href="">Contatti</a>
                     </li>
-                    <li class="p-2"><a href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <li class="p-2">
+                        <button class="btn btn-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
