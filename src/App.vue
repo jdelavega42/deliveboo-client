@@ -1,11 +1,26 @@
 <script >
+import { store } from "./store";
 import "/node_modules/@fortawesome/fontawesome-free/css/all.css";
 import HeaderMenu from './components/HeaderMenu.vue';
 import CartOffcanvas from "./components/CartOffcanvas.vue";
 
 export default {
   components:
-    { HeaderMenu, CartOffcanvas }
+    { HeaderMenu, CartOffcanvas },
+  data() {
+    return {
+      store,
+    };
+  },
+  mounted() {
+
+    // Verifica se il localStorage contiene già un array "cart"
+    const cartData = localStorage.getItem('cart');
+    if (cartData) {
+      // Se presente, aggiorna l'array "cart" nello stato dello store
+      this.store.state.cart.push(...JSON.parse(cartData));
+    }
+  },
 }
 
 </script>

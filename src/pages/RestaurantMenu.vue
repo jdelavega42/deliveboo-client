@@ -34,7 +34,7 @@ export default {
             if (resp.data.success) {
                 this.restaurant = resp.data.results[0];
                 this.products = this.restaurant.product;
-                console.log(this.products);
+
             } else {
                 this.errorMessage = `${slug} non è un ristorante`;
             }
@@ -53,13 +53,44 @@ export default {
             }
         },
         addToCart(newProduct) {
-            let cart = this.store.state.cart;
-            if (cart.includes(newProduct)) {
-                cart.indexOf(newProduct).quantity = newProduct.quantity
+
+            const existingProduct = this.store.state.cart.find((item) => item.id === newProduct.id);
+            if (existingProduct) {
+                existingProduct.quantity = newProduct.quantity;
+            } else {
+                // Il prodotto non esiste nell'array "cart"
+                // Aggiungi il prodotto all'array "cart"
+                this.store.state.cart.push({ ...newProduct, quantity: newProduct.quantity });
+                // this.saveCartToLocalStorage();
             }
-            cart.push(newProduct);
-            console.log(cart);
-        }
+            localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
+
+            // let cart = this.store.state.cart;
+            // if (cart.includes(newProduct)) {
+            //     cart.indexOf(newProduct).quantity = newProduct.quantity
+
+            //     const cart1 = JSON.parse(localStorage.getItem('cart'));
+            //     const index = cart1.findIndex((item) => item.id === indexOf(newProduct));
+            //     if (index !== -1) {
+            //         cart1[index].quantity = newProduct.quantity;
+
+            //         // Aggiorna il localStorage con l'array aggiornato
+            //         localStorage.setItem('cart', JSON.stringify(cart1));
+            //     }
+            //     // localStorage.setItem('cart', JSON.stringify(cart1));
+
+            // } else {
+            //     cart.push(newProduct);
+
+            //     this.saveCartToLocalStorage();
+            // }
+
+        },
+        saveCartToLocalStorage() {
+            const cart = JSON.stringify(this.store.state.cart);
+            localStorage.setItem('cart', cart);
+            // console.log(JSON.parse(cart)[0].quantity);
+        },
 
     },
 };

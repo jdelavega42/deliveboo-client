@@ -6,5 +6,5 @@ export const store = reactive({
         products: [],
         cart: [],
         order: {}
-    }
+    },
 });
