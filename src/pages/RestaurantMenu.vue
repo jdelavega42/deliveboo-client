@@ -54,6 +54,11 @@ export default {
         },
         addToCart(newProduct) {
             let cart = this.store.state.cart;
+            if (cart.includes(newProduct)) {
+                cart.indexOf(newProduct).quantity = newProduct.quantity
+            }
+            cart.push(newProduct);
+            console.log(cart);
         }
 
     },
