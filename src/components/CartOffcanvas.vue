@@ -28,6 +28,7 @@ export default {
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             <h3 class=" offcanvas-title fw-normal mb-0 text-black">Shopping Cart</h3>
         </div>
+        <!-- lorem -->
         <div class="offcanvas-body">
             <div class="container py-1">
                 <div class="row d-flex justify-content-center align-items-center">
