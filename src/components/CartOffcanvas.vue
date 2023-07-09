@@ -18,20 +18,19 @@ export default {
     mounted() {
         this.productMultiplier(),
             this.totalCart()
+        // this.store.state.total = this.store.state.cart.reduce((total, item) => total + parseFloat(item.price) * parseInt(item.quantity), 0);
     },
     methods: {
         increment(product) {
             product.quantity++
-            localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
-
+            this.store.updateLocalStorage();
         },
 
         decrement(product) {
             let currentValue = product.quantity;
             if (currentValue > 1) {
                 product.quantity--
-                localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
-
+                this.store.updateLocalStorage();
             }
         },
         updateQuantity(product, quantity) {
@@ -45,9 +44,28 @@ export default {
                 product.quantity = 0;
 
             }
-            localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
+            this.store.updateLocalStorage();
+
+
+        },
+        deleteCartProduct(product) {
+            const index = this.store.state.cart.indexOf(product);
+            this.store.state.cart.splice(index, 1);
+            this.store.updateLocalStorage();
+
+
         }
-    }
+    },
+    computed: {
+        totalCost() {
+            let cost = this.store.state.cart.reduce((total, item) => total + parseFloat(item.price) * parseInt(item.quantity), 0);
+            this.store.state.total = cost
+            return cost
+
+
+
+        }
+    },
 }
 </script>
 
@@ -88,7 +106,8 @@ export default {
                                             <i class="fa-solid fa-plus"></i>
                                         </div>
                                     </div>
-                                    <button class="btn  w-100 btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                    <div class="btn  w-100 btn-outline-danger" @click="deleteCartProduct(product)"><i
+                                            class="fas fa-trash"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +120,7 @@ export default {
                             <p class="lead fw-normal mb-2">Your Order</p>
 
                             <!-- aggiungere funzione productMultiplier -->
-                            <h5>&euro;<span id="totalCartPrice">499.00</span></h5>
+                            <h5>&euro;<span id="totalCartPrice">{{ totalCost }}</span></h5>
                         </div>
                         <a href="#" class="btn btn-success btn-block btn-lg">Checkout</a>
                     </div>
