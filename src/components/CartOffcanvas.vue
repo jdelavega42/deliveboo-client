@@ -15,9 +15,38 @@ export default {
             totalCart
         }
     },
-    mounted(){
+    mounted() {
         this.productMultiplier(),
-        this.totalCart()
+            this.totalCart()
+    },
+    methods: {
+        increment(product) {
+            product.quantity++
+            localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
+
+        },
+
+        decrement(product) {
+            let currentValue = product.quantity;
+            if (currentValue > 1) {
+                product.quantity--
+                localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
+
+            }
+        },
+        updateQuantity(product, quantity) {
+
+            const newQuantity = parseInt(quantity.target.value);
+
+            // Verifica se il nuovo valore dell'input è valido
+            if (newQuantity && newQuantity >= 0) {
+                product.quantity = newQuantity;
+            } else {
+                product.quantity = 0;
+
+            }
+            localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
+        }
     }
 }
 </script>
@@ -33,32 +62,31 @@ export default {
             <div class="container py-1">
                 <div class="row d-flex justify-content-center align-items-center">
                     <!-- INIZIO SINGOLA CARTA -->
-                    <div class="card rounded-3 mb-2">
+                    <div class="card rounded-3 mb-2" v-for="product in store.state.cart">
                         <div class="row d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between p-1">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
                                     class="img-fluid rounded-3 col-6" alt="Cotton T-shirt">
                                 <div class="col-6 text-center p-1 d-flex flex-column justify-content-between">
-                                    <p class="lead fw-normal mb-2">Pasta al pesto</p>
+                                    <p class="lead fw-normal mb-2">{{ product.name }}</p>
 
                                     <!-- aggiungere funzione productMultiplier -->
-                                    <h5 class="mb-0">&euro;<span class="price">499.00</span></h5>
+                                    <h5 class="mb-0">&euro;<span class="price">{{ product.price }}</span></h5>
 
                                     <div class="d-flex">
-                                        <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
+                                        <div class="p-2" @click="decrement(product)">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </div>
 
 
                                         <!-- Modificare value -->
-                                        <input id="form1" min="1" name="quantity" value="2" type="number"
-                                            class="text-center form-control form-control-sm" />
+                                        <input id="form1" min="1" name="quantity" type="number"
+                                            class="text-center form-control form-control-sm" :value="product.quantity"
+                                            @input="updateQuantity(product, $event)" />
 
-                                        <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
+                                        <div class="p-2" @click="increment(product)">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </div>
                                     </div>
                                     <button class="btn  w-100 btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </div>
@@ -67,104 +95,6 @@ export default {
                     </div>
 
                     <!-- FINE SINGOLA CARTA -->
-
-
-                    <!-- INIZIO CARTE DA CANCELLARE -->
-                    <div class="card rounded-3 mb-2">
-                        <div class="row d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between p-1">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                                    class="img-fluid rounded-3 col-6" alt="Cotton T-shirt">
-                                <div class="col-6 text-center p-1 d-flex flex-column justify-content-between">
-                                    <p class="lead fw-normal mb-2">Pasta al pesto</p>
-
-                                    <!-- aggiungere funzione productMultiplier -->
-                                    <h5 class="mb-0">&euro;<span class="price">499.00</span></h5>
-
-                                    <div class="d-flex">
-                                        <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-
-                                        <input min="1" name="quantity" value="2" type="number"
-                                            class="text-center form-control form-control-sm" />
-
-                                        <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <button class="btn  w-100 btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card rounded-3 mb-2">
-                        <div class="row d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between p-1">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                                    class="img-fluid rounded-3 col-6" alt="Cotton T-shirt">
-                                <div class="col-6 text-center p-1 d-flex flex-column justify-content-between">
-                                    <p class="lead fw-normal mb-2">Pasta al pesto</p>
-
-                                    <!-- aggiungere funzione productMultiplier -->
-                                    <h5 class="mb-0">&euro;<span class="price">499.00</span></h5>
-
-                                    <div class="d-flex">
-                                        <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-
-                                        <input min="1" name="quantity" value="2" type="number"
-                                            class="text-center form-control form-control-sm" />
-
-                                        <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <button class="btn  w-100 btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card rounded-3 mb-2">
-                        <div class="row d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between p-1">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                                    class="img-fluid rounded-3 col-6" alt="Cotton T-shirt">
-                                <div class="col-6 text-center p-1 d-flex flex-column justify-content-between">
-                                    <p class="lead fw-normal mb-2">Pasta al pesto</p>
-
-                                    <!-- aggiungere funzione productMultiplier -->
-                                    <h5 class="mb-0">&euro;<span class="price">499.00</span></h5>
-
-                                    <div class="d-flex">
-                                        <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-
-                                        <input min="1" name="quantity" value="2" type="number"
-                                            class="text-center form-control form-control-sm" />
-
-                                        <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <button class="btn  w-100 btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                   
-                    <!-- FINE CARTE DA CANCELLARE -->
 
                     <div class="card p-1 mt-4">
                         <div class="d-flex justify-content-around align-items-center">
