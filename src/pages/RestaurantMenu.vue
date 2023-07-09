@@ -34,7 +34,7 @@ export default {
             if (resp.data.success) {
                 this.restaurant = resp.data.results[0];
                 this.products = this.restaurant.product;
-                console.log(this.products);
+
             } else {
                 this.errorMessage = `${slug} non è un ristorante`;
             }
@@ -46,14 +46,24 @@ export default {
         },
 
         decrement(product) {
-            //   let numberInput = document.getElementById("number-" + id);
+
             let currentValue = product.quantity;
             if (currentValue > 1) {
                 product.quantity--
             }
         },
         addToCart(newProduct) {
-            let cart = this.store.state.cart;
+
+            const existingProduct = this.store.state.cart.find((item) => item.id === newProduct.id);
+            if (existingProduct) {
+                existingProduct.quantity = newProduct.quantity;
+            } else {
+                // Il prodotto non esiste nell'array "cart"
+                // Aggiungi il prodotto all'array "cart"
+                this.store.state.cart.push({ ...newProduct, quantity: newProduct.quantity });
+            }
+            localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
+
         }
 
     },
