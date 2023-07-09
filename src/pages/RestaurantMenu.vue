@@ -7,24 +7,9 @@ export default {
         return {
             restaurant: [],
             errorMessage: "",
-            products: [
-                {
-                    id: 1,
-                    name: "Prodotto 1",
-                    description:
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas sed dignissimos tempora quasi libero voluptas laborum dolorem itaque deleniti quaerat est, accusantium numquam harum, saepe, veniam cumque? Incidunt, reiciendis illum.",
-                    price: 12.0,
-                    quantity: 0,
-                },
-                {
-                    id: 2,
-                    name: "Prodotto 2",
-                    description:
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas sed dignissimos tempora quasi libero voluptas laborum dolorem itaque deleniti quaerat est, accusantium numquam harum, saepe, veniam cumque? Incidunt, reiciendis illum. shfavfbHASFAHSBDIUFDASDUGHVBUJS<DHAHBGVUJASEHGUAWENVUIUAWEIWH",
-                    price: 14.0,
-                    quantity: 0,
-                },
-            ],
+            products: [],
+            quantity: [],
+            // errorQuantity: "",
             store,
         };
     },
@@ -34,36 +19,49 @@ export default {
             if (resp.data.success) {
                 this.restaurant = resp.data.results[0];
                 this.products = this.restaurant.product;
+                this.quantity = this.products.map(() => 1); // Inizializza l'array dei valori con 1 per ogni input
+
 
             } else {
                 this.errorMessage = `${slug} non è un ristorante`;
             }
         });
+
     },
     methods: {
-        increment(product) {
-            product.quantity++
+        increment(index) {
+            this.quantity[index]++;
         },
 
-        decrement(product) {
+        decrement(index) {
 
-            let currentValue = product.quantity;
-            if (currentValue > 1) {
-                product.quantity--
+            if (this.quantity[index] > 1) {
+                this.quantity[index]--;
             }
         },
-        addToCart(newProduct) {
+        addQuantity(index, quantity) {
+            if (quantity > 1) {
+                this.quantity[index] = parseInt(quantity);
+                // this.errorQuantity = ""
 
-            const existingProduct = this.store.state.cart.find((item) => item.id === newProduct.id);
-            if (existingProduct) {
-                existingProduct.quantity = newProduct.quantity;
             } else {
+                // this.errorQuantity = "La quantità deve essere maggiore di 0"
+
+            }
+        },
+        addToCart(product, index) {
+
+            const existingProduct = this.store.state.cart.find((item) => item.id === product.id);
+            if (existingProduct && this.quantity[index] > 0) {
+                existingProduct.quantity = this.quantity[index];
+                this.store.updateLocalStorage();
+
+            } else if (this.quantity[index] > 0) {
                 // Il prodotto non esiste nell'array "cart"
                 // Aggiungi il prodotto all'array "cart"
-                this.store.state.cart.push({ ...newProduct, quantity: newProduct.quantity });
+                this.store.state.cart.push({ ...product, quantity: this.quantity[index] });
+                this.store.updateLocalStorage();
             }
-            localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
-
         }
 
     },
@@ -125,7 +123,7 @@ export default {
         <h2 class="text-center mt-3">I nostri prodotti</h2>
         <div class="menu d-flex flex-column align-items-center">
             <div class="single-product rounded m-2 d-flex justify-content-around align-items-center"
-                v-for="product in products">
+                v-for="(product, index) in products" :key="index">
                 <div class="images">
                     <img class="rounded" src="../assets/img/pizza_ph.jpg" alt="" />
                 </div>
@@ -135,25 +133,29 @@ export default {
                     <div class="price my-2 me-3 align-self-end">
                         Prezzo {{ product.price }} $
                     </div>
-                    <div v-if="product.visibility">Il prodotto e disponibile</div>
-                    <div v-else>Il Prodotto non e disponibile</div>
+                    <div v-if="product.visibility">Il prodotto è disponibile</div>
+                    <div v-else>Il Prodotto non è disponibile</div>
                 </div>
                 <div class="cart-section d-flex flex-column h-100 justify-content-around h-100">
                     <div class="text-center" for="number">Quantità:</div>
                     <div class="position-relative quantity-form">
+                        <div class="position-absolute error-quantity" v-if="quantity[index] < 1">"Inserisci un valore
+                            maggiore di 0"</div>
+
                         <div class="d-flex align-items-center h-100">
-                            <div class="p-2" @click="decrement(product)">
+                            <div class="p-2" @click="decrement(index)">
                                 <i class="fa-solid fa-minus"></i>
                             </div>
                             <input type="number" :id="'number-' + product.id" class="quantity-number form-control"
-                                name="number" v-model="product.quantity" />
+                                name="number" v-model="quantity[index]" @input="addQuantity(index, $event.target.value)"
+                                min="1" />
 
-                            <div class="p-2" @click="increment(product)">
+                            <div class="p-2" @click="increment(index)">
                                 <i class="fa-solid fa-plus"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="text-center" @click="addToCart(product)">
+                    <div class="text-center" @click="addToCart(product, index)">
                         Aggiungi al carrello <i class="fa-solid fa-cart-plus"></i>
                     </div>
                 </div>
@@ -214,9 +216,12 @@ h2 {
     .cart-section {
         height: 90%;
         width: 15%;
-        // background-color: yellow;
 
-        .quantity-form {}
+        .error-quantity {
+            color: red;
+            top: -20px;
+            font-size: .8rem;
+        }
     }
 }
 
