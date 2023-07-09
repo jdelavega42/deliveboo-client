@@ -46,7 +46,7 @@ export default {
         },
 
         decrement(product) {
-            //   let numberInput = document.getElementById("number-" + id);
+
             let currentValue = product.quantity;
             if (currentValue > 1) {
                 product.quantity--
@@ -61,36 +61,10 @@ export default {
                 // Il prodotto non esiste nell'array "cart"
                 // Aggiungi il prodotto all'array "cart"
                 this.store.state.cart.push({ ...newProduct, quantity: newProduct.quantity });
-                // this.saveCartToLocalStorage();
             }
             localStorage.setItem('cart', JSON.stringify(this.store.state.cart));
 
-            // let cart = this.store.state.cart;
-            // if (cart.includes(newProduct)) {
-            //     cart.indexOf(newProduct).quantity = newProduct.quantity
-
-            //     const cart1 = JSON.parse(localStorage.getItem('cart'));
-            //     const index = cart1.findIndex((item) => item.id === indexOf(newProduct));
-            //     if (index !== -1) {
-            //         cart1[index].quantity = newProduct.quantity;
-
-            //         // Aggiorna il localStorage con l'array aggiornato
-            //         localStorage.setItem('cart', JSON.stringify(cart1));
-            //     }
-            //     // localStorage.setItem('cart', JSON.stringify(cart1));
-
-            // } else {
-            //     cart.push(newProduct);
-
-            //     this.saveCartToLocalStorage();
-            // }
-
-        },
-        saveCartToLocalStorage() {
-            const cart = JSON.stringify(this.store.state.cart);
-            localStorage.setItem('cart', cart);
-            // console.log(JSON.parse(cart)[0].quantity);
-        },
+        }
 
     },
 };

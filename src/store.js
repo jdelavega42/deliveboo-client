@@ -5,6 +5,11 @@ export const store = reactive({
     state: {
         products: [],
         cart: [],
-        order: {}
+        order: {},
+        total: 0
     },
+    updateLocalStorage() {
+        localStorage.setItem('cart', JSON.stringify(this.state.cart));
+
+    }
 });

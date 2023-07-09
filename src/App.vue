@@ -3,10 +3,11 @@ import { store } from "./store";
 import "/node_modules/@fortawesome/fontawesome-free/css/all.css";
 import HeaderMenu from './components/HeaderMenu.vue';
 import CartOffcanvas from "./components/CartOffcanvas.vue";
+import Payment from "./pages/Payment.vue";
 
 export default {
   components:
-    { HeaderMenu, CartOffcanvas },
+    { HeaderMenu, CartOffcanvas, Payment },
   data() {
     return {
       store,
