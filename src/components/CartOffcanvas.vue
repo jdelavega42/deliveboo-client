@@ -17,10 +17,11 @@ export default {
     },
     mounted() {
         this.productMultiplier(),
-            this.totalCart()
+        this.totalCart()
         // this.store.state.total = this.store.state.cart.reduce((total, item) => total + parseFloat(item.price) * parseInt(item.quantity), 0);
     },
     methods: {
+
         increment(product) {
             product.quantity++
             this.store.updateLocalStorage();
@@ -61,9 +62,6 @@ export default {
             let cost = this.store.state.cart.reduce((total, item) => total + parseFloat(item.price) * parseInt(item.quantity), 0);
             this.store.state.total = cost
             return cost
-
-
-
         }
     },
 }
@@ -122,7 +120,7 @@ export default {
                             <!-- aggiungere funzione productMultiplier -->
                             <h5>&euro;<span id="totalCartPrice">{{ totalCost }}</span></h5>
                         </div>
-                        <a href="#" class="btn btn-success btn-block btn-lg">Checkout</a>
+                        <router-link :to="{name: 'order'}" class="btn btn-success btn-block btn-lg">Checkout</router-link>
                     </div>
                 </div>
             </div>

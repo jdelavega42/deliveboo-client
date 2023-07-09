@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "./pages/HomePage.vue";
 import RestaurantMenu from "./pages/RestaurantMenu.vue";
+import Payment from "./pages/Payment.vue";
+import thankYou from "./pages/thankYou.vue";
+
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,19 +19,16 @@ const router = createRouter({
       name: "restaurant",
       component: RestaurantMenu,
     },
-
-    // {
-    //     path: "/projects/:slug",
-    //     name: "single-projects",
-    //     component: SingleProjectPage
-    // },
-
-    // PAGINA DI ERRORE
-    // {
-    //     path: "/:pathMatch(.*)*",
-    //     name: "not-found",
-    //     component: NotFound
-    // },
+    {
+      path: "/order",
+      name: "order",
+      component: Payment,
+    },
+    {
+      path: "/state",
+      name: "state",
+      component: thankYou,
+    },
   ],
 });
 
