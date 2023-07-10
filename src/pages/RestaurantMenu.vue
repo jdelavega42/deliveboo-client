@@ -56,11 +56,18 @@ export default {
                 existingProduct.quantity = this.quantity[index];
                 this.store.updateLocalStorage();
 
-            } else if (this.quantity[index] > 0) {
+            } else if (this.quantity[index] > 0 && !this.store.state.cart[0]) {
+
+
                 // Il prodotto non esiste nell'array "cart"
                 // Aggiungi il prodotto all'array "cart"
                 this.store.state.cart.push({ ...product, quantity: this.quantity[index] });
                 this.store.updateLocalStorage();
+            } else if (this.quantity[index] > 0 && this.store.state.cart[0] && product.restaurant_id == this.store.state.cart[0].restaurant_id) {
+                this.store.state.cart.push({ ...product, quantity: this.quantity[index] });
+                this.store.updateLocalStorage();
+            } else if (this.quantity[index] > 0 && this.store.state.cart[0] && product.restaurant_id != this.store.state.cart[0].restaurant_id) {
+                alert('Puoi inserire prodotti di un solo ristorante, aggiungi altor di ' + this.store.state.cart[0].name + ' o rimuovili')
             }
         }
 
