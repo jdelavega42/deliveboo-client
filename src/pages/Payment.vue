@@ -35,6 +35,10 @@
         </tr>
       </tbody>
     </table>
+    <div class=" text-end total me-5">
+      <h2>Totale:</h2>
+      <h3 class="">€ {{ store.state.total }}</h3>
+    </div>
 
 
     <form>
