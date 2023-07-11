@@ -20,7 +20,15 @@ export default {
     if (cartData) {
       // Se presente, aggiorna l'array "cart" nello stato dello store
       this.store.state.cart.push(...JSON.parse(cartData));
+
     }
+    if (this.store.state.cart.length > 0 && this.store.state.cart.every(obj => obj.quantity > 0)) {
+      this.store.state.ordable = true
+    } else {
+      this.store.state.ordable = false
+
+    }
+
   },
 }
 
