@@ -25,40 +25,6 @@ export default {
             }
         });
     },
-    //   methods: {
-    // increment(index) {
-    //   this.quantity[index]++;
-    // },
-
-    // decrement(index) {
-    //   if (this.quantity[index] > 1) {
-    //     this.quantity[index]--;
-    //   }
-    // },
-    // addQuantity(index, quantity) {
-    //   if (quantity > 1) {
-    //     this.quantity[index] = parseInt(quantity);
-    //     // this.errorQuantity = ""
-    //   } else {
-    //     // this.errorQuantity = "La quantità deve essere maggiore di 0"
-    //   }
-    // },
-    // addToCart(product, index) {
-    //   const existingProduct = this.store.state.cart.find(
-    //     (item) => item.id === product.id
-    //   );
-    //   if (existingProduct && this.quantity[index] > 0) {
-    //     existingProduct.quantity = this.quantity[index];
-    //     this.store.updateLocalStorage();
-    //   } else if (this.quantity[index] > 0) {
-    //     // Il prodotto non esiste nell'array "cart"
-    //     // Aggiungi il prodotto all'array "cart"
-    //     this.store.state.cart.push({
-    //       ...product,
-    //       quantity: this.quantity[index],
-    //     });
-
-    // },
     methods: {
         increment(index) {
             this.quantity[index]++;
@@ -73,11 +39,6 @@ export default {
         addQuantity(index, quantity) {
             if (quantity > 1) {
                 this.quantity[index] = parseInt(quantity);
-                // this.errorQuantity = ""
-
-            } else {
-                // this.errorQuantity = "La quantità deve essere maggiore di 0"
-
             }
         },
         addToCart(product, index) {
@@ -94,6 +55,8 @@ export default {
                 // Aggiungi il prodotto all'array "cart"
                 this.store.state.cart.push({ ...product, quantity: this.quantity[index] });
                 this.store.updateLocalStorage();
+                this.store.state.ordable = true;
+
             } else if (this.quantity[index] > 0 && this.store.state.cart[0] && product.restaurant_id == this.store.state.cart[0].restaurant_id) {
                 this.store.state.cart.push({ ...product, quantity: this.quantity[index] });
                 this.store.updateLocalStorage();
