@@ -20,7 +20,8 @@
                 <i class="fa-solid fa-minus"></i>
               </div>
               <input id="form1" min="1" name="quantity" type="number" class="text-center form-control form-control-sm"
-                :value="product.quantity" @input="store.updateQuantity(product, $event)" />
+                :class="product.quantity > 0 ? '' : 'is-invalid'" :value="product.quantity"
+                @input="store.updateQuantity(product, $event)" />
               <div class="p-2" @click="store.increment(product)">
                 <i class="fa-solid fa-plus"></i>
               </div>
@@ -57,7 +58,7 @@
         </div>
         <div class="phone d-inline-block w-50 ps-2">
           <label for="exampleFormControlInput2" class="form-label">Phone</label>
-          <input v-model="phone" type="number" class="form-control" id="exampleFormControlInput2" maxlength="11">
+          <input v-model="phone" type="text" class="form-control" id="exampleFormControlInput2" maxlength="11">
         </div>
       </div>
       <div class="form-group">
@@ -149,16 +150,25 @@ export default {
     payWithCreditCard() {
       if (this.hostedFieldInstance) {
         this.hostedFieldInstance.tokenize().then(payload => {
-          axios.post('http://127.0.0.1:8000/api/payment', {
-            "token": payload.nonce,
-            "products": this.productForPay,
-            "name": this.name,
-            "phone": this.phone,
-            "email": this.email,
-            "address": this.address
-          }).then(resp => {
-            this.$router.push('/state');
-          })
+          if (this.store.state.ordable) {
+            axios.post('http://127.0.0.1:8000/api/payment', {
+              "token": payload.nonce,
+              "products": this.productForPay,
+              "name": this.name,
+              "phone": this.phone,
+              "email": this.email,
+              "address": this.address
+            }).then(resp => {
+              this.store.state.cart = [];
+              this.store.updateLocalStorage();
+              this.store.ordable();
+              this.$router.push('/state');
+
+
+            })
+          } else {
+            alert('Le quantità dei prodotti devono essere maggiori di 0');
+          }
         })
           .catch(err => {
             console.error(err);
