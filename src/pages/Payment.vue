@@ -1,6 +1,41 @@
 <template>
   <div class="container">
     <h1>Payment Form</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Prezzo</th>
+          <th scope="col">Quantità</th>
+          <th scope="col">Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="product in store.state.cart" :key="product.id">
+          <td>{{ product.name }}</td>
+          <td>&euro;{{ product.price }}</td>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="p-2" @click="store.decrement(product)">
+                <i class="fa-solid fa-minus"></i>
+              </div>
+              <input id="form1" min="1" name="quantity" type="number" class="text-center form-control form-control-sm"
+                :value="product.quantity" @input="store.updateQuantity(product, $event)" />
+              <div class="p-2" @click="store.increment(product)">
+                <i class="fa-solid fa-plus"></i>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="btn btn-outline-danger" @click="store.deleteCartProduct(product)">
+              <i class="fas fa-trash"></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
     <form>
 
       <hr />
@@ -64,7 +99,7 @@ export default {
   },
   mounted() {
     this.elementsForPay()
-    axios.get(`${this.store.apiBaseUrl}/api/order`).then(resp =>{
+    axios.get(`${this.store.apiBaseUrl}/api/order`).then(resp => {
       braintree.client.create({
         authorization: resp.data.token
       })
@@ -115,7 +150,7 @@ export default {
       if (this.hostedFieldInstance) {
         this.hostedFieldInstance.tokenize().then(payload => {
           axios.post('http://127.0.0.1:8000/api/payment', {
-            "token": payload.nonce, 
+            "token": payload.nonce,
             "products": this.productForPay,
             "name": this.name,
             "phone": this.phone,
