@@ -8,6 +8,7 @@ import {
   updateCart,
   productMultiplier,
   totalCart,
+
 } from "../utilities/helpers";
 export default {
   name: "CartOffcanvas",
@@ -21,6 +22,7 @@ export default {
       updateCart,
       productMultiplier,
       totalCart,
+
     };
   },
   mounted() {
@@ -38,7 +40,9 @@ export default {
       return cost;
     },
   },
+
 };
+
 </script>
 
 <template>
@@ -61,10 +65,11 @@ export default {
                   <p class="lead fw-normal mb-2">{{ product.name }}</p>
 
                   <!-- aggiungere funzione productMultiplier -->
-                  <h5 class="mb-0">
+                  <h5 class="mt-0 mb-3">
                     &euro;<span class="price">{{ product.price }}</span>
                   </h5>
-
+                  <div class="position-absolute error-quantity" v-if="product.quantity == 0">La quantita non può essere 0
+                    o negativa</div>
                   <div class="d-flex">
                     <div class="p-2" @click="store.decrement(product)">
                       <i class="fa-solid fa-minus"></i>
@@ -98,7 +103,8 @@ export default {
                 &euro;<span id="totalCartPrice">{{ totalCost }}</span>
               </h5>
             </div>
-            <router-link :to="{ name: 'order' }" class="btn btn-success btn-block btn-lg">Checkout</router-link>
+            <router-link :to="store.state.ordable ? { name: 'order' } : '#'" class="btn btn-success btn-block btn-lg"
+              :class="store.state.ordable ? 'btn-success' : 'btn-danger'">Checkout</router-link>
             <router-link :to="{ name: 'home' }" class="btn btn-success btn-block btn-lg">Continua con gli
               acquisti</router-link>
           </div>
@@ -111,4 +117,10 @@ export default {
 <style lang="scss" scoped>
 @use "../style/general.scss" as *;
 @use "../style/partials/variables" as *;
+
+.error-quantity {
+  color: red;
+  top: 53px;
+  font-size: 0.8rem;
+}
 </style>

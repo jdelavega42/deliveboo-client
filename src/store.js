@@ -6,10 +6,10 @@ export const store = reactive({
     state: {
         cart: [],
         selectRestaurant: null,
+        ordable: null,
         order: {},
         total: 0
     },
-
     updateLocalStorage() {
         localStorage.setItem('cart', JSON.stringify(this.state.cart));
     },
@@ -45,3 +45,4 @@ export const store = reactive({
       this.updateLocalStorage();
     }
 });
+
