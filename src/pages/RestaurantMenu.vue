@@ -71,105 +71,122 @@ export default {
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">Logo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <!-- RESTAURANT INFO -->
-        <div class="row row-cols-2">
-            <!-- NAME AND MORE INFO -->
-            <div class="col restaurant-info restaurant-name">
-                <div class="info d-flex flex-column justify-content-center align-items-center h-100">
-                    <h1 class="name m-1">{{ restaurant.name }}</h1>
-                    <div v-for="cooking in restaurant.cookings" class="cookings m-3">
-                        {{ cooking.name }}
-                    </div>
-                    <div class="description m-3">
-                        {{ restaurant.PIVA }}
-                    </div>
-                    <div class="address m-2">{{ restaurant.address }}</div>
-                    <div class="number m-1">{{ restaurant.number }}</div>
-                </div>
-            </div>
-
-            <!-- IMAGES -->
-            <div class="col restaurant-info restaurant-image">
-                <div class="image d-flex justify-content-center align-items-center h-100">
-                    <h2>IMMAGINI</h2>
-                </div>
-            </div>
-        </div>
-        <!-- MENU -->
-        <h2 class="text-center mt-3">I nostri prodotti</h2>
-        <div class="menu d-flex flex-column align-items-center">
-            <div class="rounded m-2 d-flex justify-content-around align-items-center"
-                :class="product.visibility ? 'single-product' : 'product-unaviable'" v-for="(product, index) in products"
-                :key="index">
-                <div class="images">
-                    <img class="rounded" src="../assets/img/pizza_ph.jpg" alt="" />
-                </div>
-                <div class="info d-flex flex-column h-100 justify-content-around">
-                    <div class="name mt-2">{{ product.name }}</div>
-                    <div class="description">{{ product.description }}</div>
-                    <div class="price my-2 me-3 align-self-end">
-                        Prezzo {{ product.price }} $
-                    </div>
-                    <div v-if="product.visibility">Il prodotto è disponibile</div>
-                    <div v-else>Il Prodotto non è disponibile</div>
-                </div>
-                <div class="cart-section d-flex flex-column h-100 justify-content-around h-100">
-                    <div class="text-center" for="number">Quantità:</div>
-                    <div class="position-relative quantity-form">
-                        <div class="position-absolute error-quantity" v-if="quantity[index] < 1">
-                            "Inserisci un valore maggiore di 0"
-                        </div>
-
-                        <div class="d-flex align-items-center h-100">
-                            <div class="p-2" @click="product.visibility ? decrement(index) : ''">
-                                <i class="fa-solid fa-minus"></i>
-                            </div>
-                            <input :class="{ 'product-disabled': !product.visibility }" type="number"
-                                :id="'number-' + product.id" class="quantity-number form-control" name="number"
-                                v-model="quantity[index]" @input="addQuantity(index, $event.target.value)" min="1" />
-
-                            <div class="p-2" @click="product.visibility ? increment(index) : ''">
-                                <i class="fa-solid fa-plus"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center" @click="addToCart(product, index)" v-if="product.visibility">
-                        <span class="add-cart">Aggiungi al carrello <i class="fa-solid fa-cart-plus"></i></span>
-                    </div>
-                    <div class="text-center" v-else>
-                        <span class="add-cart-disabled">Prodotto non disponibile</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">Logo</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
+  <div class="container-fluid">
+    <!-- RESTAURANT INFO -->
+    <div class="row row-cols-2">
+      <!-- NAME AND MORE INFO -->
+      <div class="col restaurant-info restaurant-name">
+        <div class="info d-flex flex-column justify-content-center align-items-center h-100">
+          <h1 class="name m-1">{{ restaurant.name }}</h1>
+          <div v-for="cooking in restaurant.cookings" class="cookings m-3">
+            {{ cooking.name }}
+          </div>
+          <div class="description m-3">
+            {{ restaurant.PIVA }}
+          </div>
+          <div class="address m-2">{{ restaurant.address }}</div>
+          <div class="number m-1">{{ restaurant.number }}</div>
+        </div>
+      </div>
+
+      <!-- IMAGES -->
+      <div class="col restaurant-info restaurant-image">
+        <div class="image d-flex justify-content-center align-items-center h-100">
+          <h2>IMMAGINI</h2>
+        </div>
+      </div>
+    </div>
+    <!-- MENU -->
+    <h2 class="text-center mt-3">I nostri prodotti</h2>
+    <div class="menu d-flex flex-column align-items-center">
+      <div class="rounded m-2 d-flex justify-content-around align-items-center"
+        :class="product.visibility ? 'single-product' : 'product-unaviable'" v-for="(product, index) in products"
+        :key="index">
+        <div class="images d-flex align-items-center" style="max-width: 170px">
+          <div class="carousel slide" :id="'carouselExampleControls-' + index" data-bs-ride="carousel">
+            <div class="carousel-inner" style="height: 100px">
+              <div class="carousel-item" v-for="(image, imageIndex) in product.image_path" :class="{ 'active': imageIndex === 0 }">
+                <img :src="`${store.apiBaseUrl}/${image}`" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" :data-bs-target="'#carouselExampleControls-' + index"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" :data-bs-target="'#carouselExampleControls-' + index"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+        <div class="info d-flex flex-column h-100 justify-content-around">
+          <div class="name mt-2">{{ product.name }}</div>
+          <div class="description">{{ product.description }}</div>
+          <div class="price my-2 me-3 align-self-end">
+            Prezzo {{ product.price }} $
+          </div>
+          <div v-if="product.visibility">Il prodotto è disponibile</div>
+          <div v-else>Il Prodotto non è disponibile</div>
+        </div>
+        <div class="cart-section d-flex flex-column h-100 justify-content-around h-100">
+          <div class="text-center" for="number">Quantità:</div>
+          <div class="position-relative quantity-form">
+            <div class="position-absolute error-quantity" v-if="quantity[index] < 1">
+              "Inserisci un valore maggiore di 0"
+            </div>
+
+            <div class="d-flex align-items-center h-100">
+              <div class="p-2" @click="product.visibility ? decrement(index) : ''">
+                <i class="fa-solid fa-minus"></i>
+              </div>
+              <input :class="{ 'product-disabled': !product.visibility }" type="number"
+                :id="'number-' + product.id" class="quantity-number form-control" name="number"
+                v-model="quantity[index]" @input="addQuantity(index, $event.target.value)" min="1" />
+
+              <div class="p-2" @click="product.visibility ? increment(index) : ''">
+                <i class="fa-solid fa-plus"></i>
+              </div>
+            </div>
+          </div>
+          <div class="text-center" @click="addToCart(product, index)" v-if="product.visibility">
+            <span class="add-cart">Aggiungi al carrello <i class="fa-solid fa-cart-plus"></i></span>
+          </div>
+          <div class="text-center" v-else>
+            <span class="add-cart-disabled">Prodotto non disponibile</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+
 
 <style lang="scss" scoped>
 @use "../style/general.scss" as *;
