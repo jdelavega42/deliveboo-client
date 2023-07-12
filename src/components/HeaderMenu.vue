@@ -5,28 +5,37 @@ export default {
 </script>
 
 <template>
-    <div class=" header-menu">
-        <div class="d-flex justify-content-between align-items-center container h-100">
-
-            <img src="../assets/img/db_logo.png" alt="">
-
-            <div>
-                <ul class="d-flex justify-content-between">
-                    <li class="p-2"><a href="">Home</a></li>
-                    <li class="p-2"><a href="http://localhost:8000">Sei un ristoratore?</a></li>
-                    <li class="p-2"><a href="">Contatti</a>
-                    </li>
-                    <li class="p-2">
-                        <button class="btn btn-link" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </button>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="../assets/img/db_logo.png" alt="" class="img-fluid smaller-image" width="150">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8000">Sei un ristoratore?</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contatti</a>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-link" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+                </li>
+            </ul>
         </div>
-
     </div>
+</nav>
+
 </template>
 
 <style lang="scss" scoped>
@@ -36,11 +45,11 @@ export default {
 .header-menu {
     height: 80px;
     box-shadow: 0 4px 2px -2px gray;
-    // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-    img {
-        height: 80%;
-    }
+    .smaller-image {
+    max-width: 50%;
+    height: auto;
+}
 
     ul {
         list-style-type: none;
@@ -52,6 +61,23 @@ export default {
             text-decoration: none;
             font-size: 1.2rem;
         }
+    }
+}
+
+@media (max-width: 768px) {
+    .header-menu {
+        padding: 10px;
+    }
+    .header-menu img {
+        width: 50%;
+    }
+    .header-menu ul {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .header-menu ul li {
+        margin-bottom: 10px;
     }
 }
 </style>
