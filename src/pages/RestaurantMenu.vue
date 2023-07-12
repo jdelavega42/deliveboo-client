@@ -71,12 +71,11 @@ export default {
 </script>
 
 <template>
-
     <!-- <div class="container"> -->
-        <!-- RESTAURANT INFO -->
-        <!-- <div class="row row-cols-2"> -->
-            <!-- NAME AND MORE INFO -->
-            <!-- <div class="col-12 col-md-6 restaurant-info restaurant-name">
+    <!-- RESTAURANT INFO -->
+    <!-- <div class="row row-cols-2"> -->
+    <!-- NAME AND MORE INFO -->
+    <!-- <div class="col-12 col-md-6 restaurant-info restaurant-name">
             <div class="info d-flex flex-column justify-content-center align-items-center">
                 <h1 class="name m-3">{{ restaurant.name }}</h1>
                     <div>Tipo di cucina:</div>
@@ -91,15 +90,15 @@ export default {
                 </div>
             </div> -->
 
-            <!-- IMAGES -->
-            <!-- <div class="col-12 col-md-6 restaurant-info restaurant-image">
+    <!-- IMAGES -->
+    <!-- <div class="col-12 col-md-6 restaurant-info restaurant-image">
             <div class="image d-flex justify-content-center align-items-center">
                     <h2>IMMAGINI</h2>
                 </div>
             </div>
         </div> -->
-        <!-- MENU -->
-        <!-- <h2 class="text-center mt-3">I nostri prodotti</h2>
+    <!-- MENU -->
+    <!-- <h2 class="text-center mt-3">I nostri prodotti</h2>
         <div class="menu d-flex flex-column align-items-center">
             <div class="row">
                 <div class="col-lg-6 col-md-12 single-product rounded m-2 d-flex justify-content-around align-items-center"
@@ -144,24 +143,24 @@ export default {
             </div>
         </div>
     </div> -->
-  <div class="container">
-    <!-- RESTAURANT INFO -->
-    <div class="row row-cols-2">
-      <!-- NAME AND MORE INFO -->
-      <div class="col-12 col-md-6 restaurant-info restaurant-name">
-        <div class="info d-flex flex-column justify-content-center align-items-center">
-          <h1 class="name m-3">{{ restaurant.name }}</h1>
-          <div v-for="cooking in restaurant.cookings" class="cookings m-3">
-            {{ cooking.name }}
-          </div>
-          <div class="description m-3">
-            {{ restaurant.PIVA }}
-          </div>
-          <div class="address m-2">{{ restaurant.address }}</div>
-          <div class="number m-1">{{ restaurant.number }}</div>
+    <div class="container">
+        <!-- RESTAURANT INFO -->
+        <div class="row row-cols-2">
+            <!-- NAME AND MORE INFO -->
+            <div class="col-12 col-md-6 restaurant-info restaurant-name">
+                <div class="info d-flex flex-column justify-content-center align-items-center">
+                    <h1 class="name m-3">{{ restaurant.name }}</h1>
+                    <div v-for="cooking in restaurant.cookings" class="cookings m-3">
+                        {{ cooking.name }}
+                    </div>
+                    <div class="description m-3">
+                        {{ restaurant.PIVA }}
+                    </div>
+                    <div class="address m-2">{{ restaurant.address }}</div>
+                    <div class="number m-1">{{ restaurant.number }}</div>
+                </div>
+            </div>
         </div>
-      </div>
-
       <!-- IMAGES -->
       <div class="col-12 col-md-6 restaurant-info restaurant-image">
         <div class="image d-flex justify-content-center align-items-center">
@@ -232,7 +231,6 @@ export default {
             </div>
         </div>
     </div>
-  </div>
 </template>
 
 
@@ -268,12 +266,13 @@ h2 {
     pointer-events: none;
     opacity: 0.5;
 }
+
 ul {
-  list-style: none;
+    list-style: none;
 }
 
 ul li {
-  display: inline-block;
+    display: inline-block;
 }
 
 .single-product {
