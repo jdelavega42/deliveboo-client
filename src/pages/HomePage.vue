@@ -69,8 +69,8 @@ export default {
   <div class="container">
     <!-- COOKINGS TYPE -->
     <h1 class="text-center m-2">COSA TI VA OGGI?</h1>
-    <div class="cookings-list d-flex row row-cols-4">
-      <div class="col text-center" v-for="cooking in cookings">
+    <div class="cookings-list row">
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center" v-for="cooking in cookings">
         <div
           class="cooking-type p-3 m-3 rounded"
           :class="{ 'bg-red': params.includes(cooking.name) }"
@@ -90,10 +90,10 @@ export default {
 
       <h2 class="text-center">{{ message }}</h2>
 
-      <div class="restaurants-list d-flex row row-cols-4">
+      <div class="restaurants-list row justify-content-center">
         <router-link
           :to="{ name: 'restaurant', params: { slug: restaurant.slug } }"
-          class="col m-3 text-center restaurant rounded"
+          class="col-6 col-sm-4 col-md-3 col-lg-2 m-3 text-center restaurant rounded"
           role="button"
           v-for="restaurant in restaurants"
         >
@@ -160,6 +160,16 @@ h2 {
 
   .cookings {
     color: white;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1rem;
   }
 }
 </style>
