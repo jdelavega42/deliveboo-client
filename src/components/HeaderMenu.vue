@@ -6,10 +6,14 @@ export default {
 
 <template>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="../assets/img/db_logo.png" alt="" class="img-fluid smaller-image" width="150">
-        </a>
+    <div class="container">                    
+        <router-link
+            :to="{ name: 'home'}"
+            role="button">
+             <a class="navbar-brand" href="#">
+                <img src="../assets/img/db_logo.png" alt="" class="img-fluid smaller-image" width="220">
+            </a>
+        </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -17,7 +21,11 @@ export default {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <router-link
+                      :to="{ name: 'home'}"
+                      role="button">
+                      <a class="nav-link text-decoration-none" href="#">Home</a>
+                    </router-link>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8000">Sei un ristoratore?</a>
@@ -26,13 +34,13 @@ export default {
                     <a class="nav-link" href="#">Contatti</a>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-link" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </button>
                 </li>
             </ul>
         </div>
+        <button class="btn btn-link" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="fa-solid fa-cart-shopping"></i>
+        </button>
     </div>
 </nav>
 
