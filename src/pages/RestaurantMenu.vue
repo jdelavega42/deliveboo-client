@@ -173,65 +173,63 @@ export default {
     <h2 class="text-center mt-3">I nostri prodotti</h2>
     <div class="row">
         <div class="menu d-flex flex-column align-items-center">
-        <div class="col-lg-6 col-md-12 single-product rounded m-2 d-flex justify-content-around align-items-center"
-            :class="product.visibility ? 'single-product' : 'product-unaviable'" v-for="(product, index) in products"
-            :key="index">
-            <div class="images d-flex align-items-center" style="max-width: 170px">
-            <div class="carousel slide" :id="'carouselExampleControls-' + index" data-bs-ride="carousel">
-                <div class="carousel-inner" style="height: 100px">
-                <div class="carousel-item" v-for="(image, imageIndex) in product.image_path" :class="{ 'active': imageIndex === 0 }">
-                    <img :src="`${store.apiBaseUrl}/${image}`" class="d-block w-100" alt="...">
+            <div class="col-lg-6 col-md-12 single-product rounded m-2 d-flex justify-content-around align-items-center"
+                :class="product.visibility ? 'single-product' : 'product-unaviable'" v-for="(product, index) in products"
+                :key="index">
+                <div class="images d-flex align-items-center">
+                    <div class="carousel slide" :id="'carouselExampleControls-' + index" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item" v-for="(image, imageIndex) in product.image_path" :class="{ 'active': imageIndex === 0 }">
+                                <img :src="`${store.apiBaseUrl}/${image}`" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" :data-bs-target="'#carouselExampleControls-' + index"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" :data-bs-target="'#carouselExampleControls-' + index"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
+                <div class="info d-flex flex-column h-100 justify-content-around p-2">
+                    <div class="name mt-2">{{ product.name }}</div>
+                    <div class="description">{{ product.description }}</div>
+                    <div class="price my-2 me-3 align-self-end">
+                        Prezzo {{ product.price }} $
+                    </div>
+                    <div v-if="product.visibility">Il prodotto è disponibile</div>
+                    <div v-else>Il Prodotto non è disponibile</div>
                 </div>
-                <button class="carousel-control-prev" type="button" :data-bs-target="'#carouselExampleControls-' + index"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" :data-bs-target="'#carouselExampleControls-' + index"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            </div>
-            <div class="info d-flex flex-column h-100 justify-content-around">
-            <div class="name mt-2">{{ product.name }}</div>
-            <div class="description">{{ product.description }}</div>
-            <div class="price my-2 me-3 align-self-end">
-                Prezzo {{ product.price }} $
-            </div>
-            <div v-if="product.visibility">Il prodotto è disponibile</div>
-            <div v-else>Il Prodotto non è disponibile</div>
-            </div>
-            <div class="cart-section d-flex flex-column h-100 justify-content-around h-100">
-            <div class="text-center" for="number">Quantità:</div>
-            <div class="position-relative quantity-form">
-                <div class="position-absolute error-quantity" v-if="quantity[index] < 1">
-                "Inserisci un valore maggiore di 0"
-                </div>
-
-                <div class="d-flex align-items-center h-100">
-                <div class="p-2" @click="product.visibility ? decrement(index) : ''">
-                    <i class="fa-solid fa-minus"></i>
-                </div>
-                <input :class="{ 'product-disabled': !product.visibility }" type="number"
-                    :id="'number-' + product.id" class="quantity-number form-control" name="number"
-                    v-model="quantity[index]" @input="addQuantity(index, $event.target.value)" min="1" />
-
-                <div class="p-2" @click="product.visibility ? increment(index) : ''">
-                    <i class="fa-solid fa-plus"></i>
-                </div>
+                <div class="cart-section d-flex flex-column justify-content-around h-100">
+                    <div class="text-center" for="number">Quantità:</div>
+                    <div class="position-relative quantity-form">
+                        <div class=" error-quantity" v-if="quantity[index] < 1">
+                        "Inserisci un valore maggiore di 0"
+                        </div>
+                        <div class="d-flex align-items-center h-100">
+                            <div class="p-2" @click="product.visibility ? decrement(index) : ''">
+                                <i class="fa-solid fa-minus"></i>
+                            </div>
+                            <input :class="{ 'product-disabled': !product.visibility }" type="number"
+                                :id="'number-' + product.id" class="quantity-number form-control" name="number"
+                                v-model="quantity[index]" @input="addQuantity(index, $event.target.value)" min="1" />
+                            <div class="p-2" @click="product.visibility ? increment(index) : ''">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center" @click="addToCart(product, index)" v-if="product.visibility">
+                        <span class="add-cart">Aggiungi al carrello <i class="fa-solid fa-cart-plus"></i></span>
+                    </div>
+                    <div class="text-center" v-else>
+                        <span class="add-cart-disabled">Prodotto non disponibile</span>
+                    </div>
                 </div>
             </div>
-            <div class="text-center" @click="addToCart(product, index)" v-if="product.visibility">
-                <span class="add-cart">Aggiungi al carrello <i class="fa-solid fa-cart-plus"></i></span>
-            </div>
-            <div class="text-center" v-else>
-                <span class="add-cart-disabled">Prodotto non disponibile</span>
-            </div>
-            </div>
-        </div>
         </div>
     </div>
   </div>
@@ -279,21 +277,24 @@ ul li {
 }
 
 .single-product {
-    height: 140px;
     border: 2px solid $primary-green;
-    width: 85%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 
     .images {
-        height: 90%;
+        margin-top: 5px;
+        height: 100%;
 
         img {
-            height: 100%;
-            max-width: 170px;
+            max-width: 300px;
         }
     }
 
     .info {
-        width: 65%;
+        width: 80%;
 
         .name {
             font-size: 1.2rem;
@@ -302,7 +303,7 @@ ul li {
 
     .cart-section {
         height: 90%;
-        width: 15%;
+        width: 30%;
 
         .error-quantity {
             color: red;
@@ -337,7 +338,7 @@ ul li {
 
     .cart-section {
         height: 90%;
-        width: 25%;
+        width: 100%;
 
         .error-quantity {
             color: red;
@@ -366,6 +367,10 @@ ul li {
 
 i {
     margin-left: 5px;
+}
+
+.quantity-number {
+  min-width: 40px; /* Imposta la larghezza desiderata in base alle tue esigenze */
 }
 
 // PER NON MOSTRARE LA BARRA CHE INCREMENTA I NUMERI
