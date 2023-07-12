@@ -18,7 +18,7 @@ export default {
         axios.get(`${store.apiBaseUrl}/api/restaurantMenu/${slug}`).then((resp) => {
             if (resp.data.success) {
                 this.restaurant = resp.data.results[0];
-                this.products = this.restaurant.product;
+                this.products = this.restaurant.products;
                 this.quantity = this.products.map(() => 1); // Inizializza l'array dei valori con 1 per ogni input
             } else {
                 this.errorMessage = `${slug} non è un ristorante`;
