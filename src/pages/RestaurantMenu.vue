@@ -57,14 +57,15 @@ export default {
                 this.store.updateLocalStorage();
                 this.store.state.ordable = true;
 
+
             } else if (this.quantity[index] > 0 && this.store.state.cart[0] && product.restaurant_id == this.store.state.cart[0].restaurant_id) {
                 this.store.state.cart.push({ ...product, quantity: this.quantity[index] });
                 this.store.updateLocalStorage();
+
             } else if (this.quantity[index] > 0 && this.store.state.cart[0] && product.restaurant_id != this.store.state.cart[0].restaurant_id) {
                 alert('Puoi inserire prodotti di un solo ristorante, aggiungi altro di ' + this.store.state.cart[0].name + ' o rimuovili')
             }
         }
-
     },
     //   },
 };
