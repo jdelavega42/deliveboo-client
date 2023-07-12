@@ -2,8 +2,8 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3 text-center">
-          <h1 class="mb-4">Thank you for your purchase!</h1>
-          <p>We appreciate your business and hope you enjoy your purchase.</p>
+          <h1 class="mb-4">Grazie per il tuo acquisto!</h1>
+          <p>Stiamo preparando il tuo ordine. A breve riceverai una mail di riepilogo.</p>
         </div>
       </div>
     </div>
