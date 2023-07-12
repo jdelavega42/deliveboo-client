@@ -12,7 +12,7 @@ export default {
 </script>
 
 <template>
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-md navbar-light bg-light">
     <div class="container">                    
         <router-link
             :to="{ name: 'home'}"
