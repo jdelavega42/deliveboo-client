@@ -63,7 +63,7 @@ export default {
                 this.store.updateLocalStorage();
 
             } else if (this.quantity[index] > 0 && this.store.state.cart[0] && product.restaurant_id != this.store.state.cart[0].restaurant_id) {
-                alert('Puoi inserire prodotti di un solo ristorante, aggiungi altro di ' + this.store.state.cart[0].name + ' o rimuovili')
+                alert('Puoi inserire prodotti di un solo ristorante, aggiungi altro di ' + this.restaurant.name + ' o rimuovili')
             }
         }
     },
