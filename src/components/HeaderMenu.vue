@@ -1,11 +1,18 @@
 <script>
+import { store } from '../store';
+
 export default {
-    name: "HeaderMenu"
+    name: "HeaderMenu",
+    data(){
+        return{
+            store
+        }
+    }
 }
 </script>
 
 <template>
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-md navbar-light bg-light">
     <div class="container">                    
         <router-link
             :to="{ name: 'home'}"
@@ -37,9 +44,10 @@ export default {
                 </li>
             </ul>
         </div>
-        <button class="btn btn-link" type="button" data-bs-toggle="offcanvas"
+        <button class="btn btn-link position-relative" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-            <i class="fa-solid fa-cart-shopping"></i>
+            <i class="fa-solid fa-cart-shopping fa-2x"></i>
+            <span v-if="store.state.cart.length > 0" class="position-absolute badge rounded-pill bg-danger" style="transform: translate(-10px,20px);"> {{ store.state.cart.length }} </span>
         </button>
     </div>
 </nav>
