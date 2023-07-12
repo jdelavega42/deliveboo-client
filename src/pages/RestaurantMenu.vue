@@ -109,7 +109,7 @@ export default {
                                 <div class="carousel-inner">
                                     <div class="carousel-item" v-for="(image, imageIndex) in product.image_path"
                                         :class="{ 'active': imageIndex === 0 }">
-                                        <img :src="`${store.apiBaseUrl}/${image}`" class="d-block w-100" alt="...">
+                                        <img :src="`${store.apiBaseUrl}/${image}`" class="d-block w-100 rounded-3" alt="...">
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button"
@@ -124,7 +124,7 @@ export default {
                                 </button>
                             </div>
                             <div v-else>
-                                <img src="../assets/img/pizza_ph.jpg" class="d-block w-100" alt="...">
+                                <img src="../assets/img/pizza_ph.jpg" class="d-block w-100 rounded-3" alt="...">
 
                             </div>
                         </div>

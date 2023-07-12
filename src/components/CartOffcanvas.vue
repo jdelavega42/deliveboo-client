@@ -25,10 +25,10 @@ export default {
 
     };
   },
-  mounted() {
-    this.productMultiplier(), this.totalCart();
-    // this.store.state.total = this.store.state.cart.reduce((total, item) => total + parseFloat(item.price) * parseInt(item.quantity), 0);
-  },
+  // mounted() {
+  //   this.productMultiplier(), this.totalCart();
+  //   // this.store.state.total = this.store.state.cart.reduce((total, item) => total + parseFloat(item.price) * parseInt(item.quantity), 0);
+  // },
   computed: {
     totalCost() {
       let cost = this.store.state.cart.reduce(
