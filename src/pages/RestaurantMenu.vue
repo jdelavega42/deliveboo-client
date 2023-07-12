@@ -76,21 +76,18 @@ export default {
         <div class="row">
             <!-- NAME AND MORE INFO -->
             <div class="col-lg-6 col-md-12 col-sm-12 restaurant-info restaurant-name">
-                <div class="info d-flex flex-column justify-content-center align-items-center">
-                    <h1 class="name m-3">{{ restaurant.name }}</h1>
-                    <div v-for="cooking in restaurant.cookings" class="cookings m-3">
-                        {{ cooking.name }}
-                    </div>
-                    <div class="description m-3">
-                        {{ restaurant.PIVA }}
-                    </div>
-                    <div class="address m-2">{{ restaurant.address }}</div>
-                    <div class="number m-1">{{ restaurant.number }}</div>
+                <div class="text-light p-4">
+                    <h2 class="fs-1 fw-bolder text-uppercase text-light">{{ restaurant.name }}</h2>
+                    <ul class="text-wrap"> 
+                        <li v-for="cooking in restaurant.cookings" class="mx-1">{{ cooking.name }}</li>
+                    </ul>
+                    <p class="fs-3">Partita IVA: {{ restaurant.PIVA }}</p>
+                    <p class="fs-3">Indirizzo: {{ restaurant.address }}</p>
+                    <p class="fs-3">Telefono: {{ restaurant.number }}</p>
                 </div>
             </div>
             <!-- IMAGES -->
-            <div
-                class="col-lg-6 col-md-12 col-sm-12 d-flex justify-content-center align-items-center text-center border border-danger">
+            <div class="col-lg-6 d-none d-lg-flex justify-content-center align-items-center text-center border border-danger">
                 <h2>IMMAGINE</h2>
             </div>
         </div>
@@ -133,44 +130,42 @@ export default {
                         <div class="col-lg-8 col-md-6 col-sm-12 row">
                             <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-column justify-content-between p-3">
                                 <div>
-                                    <div class="name fs-1 text-uppercase fw-bolder mt-2">{{ product.name }}</div>
+                                    <div class="name fs-1 text-uppercase mt-2">{{ product.name }}</div>
                                     <div class="price fs-4">{{ product.price }} &euro;</div>
-                                    <div class="description">Descrizione: {{ product.description }}</div>
-                                </div>
-                                <div class="text-end">
-
-                                    <span v-if="product.visibility"
+                                    <div class="description d-flex justify-content-between align-items-center">
+                                        <span>Descrizione: {{ product.description }}</span>
+                                        <span v-if="product.visibility"
                                         class="border border-success text-success p-1 rounded-1">Prodotto disponibile</span>
-                                    <span v-else class="border border-danger text-danger p-1 rounded-1">Prodotto non
-                                        disponibile</span>
-                                </div>
+                                        <span v-else class="border border-danger text-danger p-1 rounded-1">Prodotto non
+                                            disponibile</span>
+                                        </div>
+                                    </div>
                             </div>
 
                             <div
-                                class="col-lg-6 col-md-12 col-sm-12 text-center d-flex justify-content-lg-center align-items-lg-center justify-content-md-start align-items-md-start justify-content-sm-end align-items-sm-end">
+                                class="col-lg-6 col-md-12 col-sm-12 text-center d-flex justify-content-center align-items-center">
                                 <div class="w-75 mt-3">
                                     <div for="number">Quantità</div>
-                                    <div class="position-relative quantity-form mb-4">
-                                        <div class=" error-quantity" v-if="quantity[index] < 1">
-                                            "Inserisci un valore maggiore di 0"
-                                        </div>
+                                    <div class=" quantity-form mb-4">
                                         <div class="d-flex align-items-center h-100">
                                             <div class="p-2" @click="product.visibility ? decrement(index) : ''">
                                                 <i class="fa-solid fa-minus"></i>
                                             </div>
                                             <input :class="{ 'product-disabled': !product.visibility }" type="number"
-                                                :id="'number-' + product.id" class="quantity-number form-control"
-                                                name="number" v-model="quantity[index]"
-                                                @input="addQuantity(index, $event.target.value)" min="1" />
+                                            :id="'number-' + product.id" class="quantity-number form-control"
+                                            name="number" v-model="quantity[index]"
+                                            @input="addQuantity(index, $event.target.value)" min="1" />
                                             <div class="p-2" @click="product.visibility ? increment(index) : ''">
                                                 <i class="fa-solid fa-plus"></i>
                                             </div>
                                         </div>
+                                        <div class="text-danger text-center" v-if="quantity[index] < 1">
+                                            "Inserisci un valore maggiore di 0"
+                                        </div>
                                     </div>
                                     <div>
                                         <div v-if="product.visibility" @click="addToCart(product, index)">
-                                            <span class="add-cart">Aggiungi al carrello <i
-                                                    class="fa-solid fa-cart-plus"></i></span>
+                                            <span class="add-cart">Aggiungi al carrello <i class="fa-solid fa-cart-plus"></i></span>
                                         </div>
                                         <div v-else>
                                             <span class="add-cart-disabled">Prodotto non disponibile</span>
@@ -224,78 +219,18 @@ h2 {
 
 ul {
     list-style: none;
-}
-
-ul li {
-    display: inline-block;
+    li {
+        display: inline-block;
+    }
 }
 
 .single-product {
     border: 2px solid $primary-green;
-
-
-    .images {
-        margin-top: 5px;
-        height: 100%;
-
-        img {
-            max-width: 0px;
-        }
-    }
-
-    .info {
-        width: 80%;
-
-        .name {
-            font-size: 1.2rem;
-        }
-    }
-
-    .cart-section {
-        height: 90%;
-        width: 30%;
-
-        .error-quantity {
-            color: red;
-            top: -20px;
-            font-size: 0.8rem;
-        }
-    }
 }
 
 .product-unaviable {
     background-color: lightgray;
     border: 2px solid $primary-red;
-    // height: 140px;
-    // width: 85%;
-
-    .images {
-        height: 90%;
-
-        img {
-            height: 100%;
-            max-width: 130px;
-        }
-    }
-
-    .info {
-        width: 65%;
-
-        .name {
-            font-size: 1.2rem;
-        }
-    }
-
-    .cart-section {
-        height: 90%;
-        width: 100%;
-
-        .error-quantity {
-            color: red;
-            top: -20px;
-            font-size: 0.8rem;
-        }
-    }
 }
 
 .add-cart {
@@ -315,6 +250,10 @@ ul li {
     }
 }
 
+img {
+    max-height: 200px;
+    object-fit: cover;
+}
 i {
     margin-left: 5px;
 }
@@ -332,13 +271,4 @@ input[type="number"]::-webkit-outer-spin-button {
     display: none;
 }
 
-// @media (max-width: 472px) {
-//     .images {
-//         display: none;
-//     }
-
-//     .carrello {
-//         display: none;
-//     }
-// }
 </style>
