@@ -21,12 +21,13 @@ export default {
                 <img src="../assets/img/db_logo.png" alt="" class="img-fluid smaller-image" width="220">
             </a>
         </router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <button class="navbar-toggler position-relative" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
+            <span v-if="store.state.cart.length > 0" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto text-end">
                 <li class="nav-item">
                     <router-link
                       :to="{ name: 'home'}"
@@ -41,14 +42,14 @@ export default {
                     <a class="nav-link" href="#">Contatti</a>
                 </li>
                 <li class="nav-item">
+                    <button class="btn btn-link position-relative" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                        <i class="fa-solid fa-cart-shopping fa-2x"></i>
+                        <span v-if="store.state.cart.length > 0" class="position-absolute badge rounded-pill bg-danger"> {{ store.state.cart.length }} </span>
+                    </button>
                 </li>
             </ul>
         </div>
-        <button class="btn btn-link position-relative" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-            <i class="fa-solid fa-cart-shopping fa-2x"></i>
-            <span v-if="store.state.cart.length > 0" class="position-absolute badge rounded-pill bg-danger" style="transform: translate(-10px,20px);"> {{ store.state.cart.length }} </span>
-        </button>
     </div>
 </nav>
 
