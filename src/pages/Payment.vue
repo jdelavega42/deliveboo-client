@@ -41,48 +41,80 @@
     </div>
 
 
-    <form>
+    <div class="position-relative">
+      <form class="">
 
-      <hr />
-      <div class="">
-        <div class="email d-inline-block w-50 pe-2">
-          <label for="exampleFormControlInput3" class="form-label">Nome <span class="text-danger">*</span></label>
-          <input v-model="name" type="text" class="form-control" id="exampleFormControlInput3">
-        </div>
-        <div class="phone d-inline-block w-50 ps-2">
-          <label for="exampleFormControlInput4" class="form-label">Indirizzo <span class="text-danger">*</span></label>
-          <input v-model="address" type="text" class="form-control" id="exampleFormControlInput4" maxlength="25">
-        </div>
-      </div>
-      <div class="">
-        <div class="email d-inline-block w-50 pe-2">
-          <label for="exampleFormControlInput1" class="form-label">Email <span class="text-danger">*</span></label>
-          <input v-model="email" type="email" class="form-control" id="exampleFormControlInput1"
-            placeholder="name@example.com">
-        </div>
-        <div class="phone d-inline-block w-50 ps-2">
-          <label for="exampleFormControlInput2" class="form-label">Telefono <span class="text-danger">*</span></label>
-          <input v-model="phone" type="text" class="form-control" id="exampleFormControlInput2" maxlength="11">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Numero carta di credito <span class="text-danger">*</span></label>
-        <div id="creditCardNumber" class="form-control"></div>
-      </div>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-6">
-            <label class="form-label">Scadenza <span class="text-danger">*</span></label>
-            <div id="expireDate" class="form-control"></div>
+        <hr />
+        <div class="">
+          <div class="email d-inline-block w-50 pe-2">
+            <label for="exampleFormControlInput3" class="form-label">Nome <span class="text-danger">*</span></label>
+            <input v-model="name" type="text" class="form-control" id="exampleFormControlInput3">
           </div>
-          <div class="col-6">
-            <label class="form-label">CVV <span class="text-danger">*</span></label>
-            <div id="cvv" class="form-control"></div>
+          <div class="phone d-inline-block w-50 ps-2">
+            <label for="exampleFormControlInput4" class="form-label">Indirizzo <span class="text-danger">*</span></label>
+            <input v-model="address" type="text" class="form-control" id="exampleFormControlInput4" maxlength="25">
           </div>
         </div>
+        <div class="">
+          <div class="email d-inline-block w-50 pe-2">
+            <label for="exampleFormControlInput1" class="form-label">Email <span class="text-danger">*</span></label>
+            <input v-model="email" type="email" class="form-control" id="exampleFormControlInput1"
+              placeholder="name@example.com">
+          </div>
+          <div class="phone d-inline-block w-50 ps-2">
+            <label for="exampleFormControlInput2" class="form-label">Telefono <span class="text-danger">*</span></label>
+            <input v-model="phone" type="text" class="form-control" id="exampleFormControlInput2" maxlength="11">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Numero carta di credito <span class="text-danger">*</span></label>
+          <div id="creditCardNumber" class="form-control"></div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-6">
+              <label class="form-label">Scadenza <span class="text-danger">*</span></label>
+              <div id="expireDate" class="form-control"></div>
+            </div>
+            <div class="col-6">
+              <label class="form-label">CVV <span class="text-danger">*</span></label>
+              <div id="cvv" class="form-control"></div>
+            </div>
+          </div>
+          <p id="card-message" class="d-none">Controlla i campi della carta di credito</p>
+        </div>
+        <button class="btn btn-primary btn-block mt-4" :data-bs-toggle="store.state.ordable ? '' : 'modal'"
+          data-bs-target="#errorPayment" @click.prevent="payWithCreditCard">Paga ora</button>
+      </form>
+      <div v-if="this.loading"
+        class="d-flex justify-content-center align-items-center position-absolute w-100 h-100 bg-white bg-opacity-50 top-50 start-50 translate-middle">
+        <div class="fs-1 fw-bold">
+          CARICAMENTO
+
+        </div>
       </div>
-      <button class="btn btn-primary btn-block mt-4" @click.prevent="payWithCreditCard">Paga ora</button>
-    </form>
+    </div>
+
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal fade" :class="store.state.ordable ? 'd-none' : ''" id="errorPayment" tabindex="-1"
+    aria-labelledby="errorPayment" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Attenzione</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Il tuo carrello è vuoto
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -99,7 +131,8 @@ export default {
       address: '',
       email: '',
       phone: '',
-      productForPay: []
+      productForPay: [],
+      loading: false
     }
   },
   mounted() {
@@ -152,7 +185,17 @@ export default {
       });
     },
     payWithCreditCard() {
-      if (this.hostedFieldInstance) {
+      if (!this.hostedFieldInstance._state.fields.cvv.isValid || !this.hostedFieldInstance._state.fields.number.isValid || !this.hostedFieldInstance._state.fields.expirationDate.isValid) {
+        let error = document.getElementById('card-message')
+        error.classList.remove('d-none')
+
+      }
+      else if (this.hostedFieldInstance) {
+        let error = document.getElementById('card-message')
+        error.classList.add('d-none')
+        this.loading = true;
+
+
         this.hostedFieldInstance.tokenize().then(payload => {
           if (this.store.state.ordable) {
             axios.post('http://127.0.0.1:8000/api/payment', {
@@ -169,9 +212,12 @@ export default {
               this.$router.push('/state');
 
 
+            }).finally(() => {
+              this.loading = false;
+
             })
           } else {
-            alert('Le quantità dei prodotti devono essere maggiori di 0');
+            // alert('Le quantità dei prodotti devono essere maggiori di 0');
           }
         })
           .catch(err => {

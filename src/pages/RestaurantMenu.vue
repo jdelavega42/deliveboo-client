@@ -79,7 +79,7 @@ export default {
             <div class="col-lg-6 col-md-12 col-sm-12 restaurant-info restaurant-name">
                 <div class="text-light p-4">
                     <h2 class="fs-1 fw-bolder text-uppercase text-light">{{ restaurant.name }}</h2>
-                    <ul class="text-wrap"> 
+                    <ul class="text-wrap">
                         <li v-for="cooking in restaurant.cookings" class="mx-1">{{ cooking.name }}</li>
                     </ul>
                     <p class="fs-3">Partita IVA: {{ restaurant.PIVA }}</p>
@@ -88,7 +88,8 @@ export default {
                 </div>
             </div>
             <!-- IMAGES -->
-            <div class="col-lg-6 d-none d-lg-flex justify-content-center align-items-center text-center border border-danger">
+            <div
+                class="col-lg-6 d-none d-lg-flex justify-content-center align-items-center text-center border border-danger">
                 <h2>IMMAGINE</h2>
             </div>
         </div>
@@ -109,15 +110,18 @@ export default {
                                 <div class="carousel-inner">
                                     <div class="carousel-item" v-for="(image, imageIndex) in product.image_path"
                                         :class="{ 'active': imageIndex === 0 }">
-                                        <img :src="`${store.apiBaseUrl}/${image}`" class="d-block w-100 rounded-3" alt="...">
+                                        <img :src="`${store.apiBaseUrl}/${image}`" class="d-block w-100 rounded-3"
+                                            alt="...">
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button"
+                                    :class="product.image_path.length > 1 ? '' : 'd-none'"
                                     :data-bs-target="'#carouselExampleControls-' + index" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
                                 <button class="carousel-control-next" type="button"
+                                    :class="product.image_path.length > 1 ? '' : 'd-none'"
                                     :data-bs-target="'#carouselExampleControls-' + index" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
@@ -136,11 +140,12 @@ export default {
                                     <div class="description d-flex justify-content-between align-items-center">
                                         <span>Descrizione: {{ product.description }}</span>
                                         <span v-if="product.visibility"
-                                        class="border border-success text-success p-1 rounded-1">Prodotto disponibile</span>
+                                            class="border border-success text-success p-1 rounded-1">Prodotto
+                                            disponibile</span>
                                         <span v-else class="border border-danger text-danger p-1 rounded-1">Prodotto non
                                             disponibile</span>
-                                        </div>
                                     </div>
+                                </div>
                             </div>
 
                             <div
@@ -153,9 +158,9 @@ export default {
                                                 <i class="fa-solid fa-minus"></i>
                                             </div>
                                             <input :class="{ 'product-disabled': !product.visibility }" type="number"
-                                            :id="'number-' + product.id" class="quantity-number form-control"
-                                            name="number" v-model="quantity[index]"
-                                            @input="addQuantity(index, $event.target.value)" min="1" />
+                                                :id="'number-' + product.id" class="quantity-number form-control"
+                                                name="number" v-model="quantity[index]"
+                                                @input="addQuantity(index, $event.target.value)" min="1" />
                                             <div class="p-2" @click="product.visibility ? increment(index) : ''">
                                                 <i class="fa-solid fa-plus"></i>
                                             </div>
@@ -166,7 +171,8 @@ export default {
                                     </div>
                                     <div>
                                         <div v-if="product.visibility" @click="addToCart(product, index)">
-                                            <span class="add-cart">Aggiungi al carrello <i class="fa-solid fa-cart-plus"></i></span>
+                                            <span class="add-cart">Aggiungi al carrello <i
+                                                    class="fa-solid fa-cart-plus"></i></span>
                                         </div>
                                         <div v-else>
                                             <span class="add-cart-disabled">Prodotto non disponibile</span>
@@ -220,6 +226,7 @@ h2 {
 
 ul {
     list-style: none;
+
     li {
         display: inline-block;
     }
@@ -255,6 +262,7 @@ img {
     max-height: 200px;
     object-fit: cover;
 }
+
 i {
     margin-left: 5px;
 }
@@ -271,5 +279,4 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
     display: none;
 }
-
 </style>

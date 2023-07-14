@@ -56,19 +56,23 @@ export default {
       <div class="container py-1">
         <div class="row d-flex justify-content-center align-items-center">
           <!-- INIZIO SINGOLA CARTA -->
-          <div class="card rounded-3 mb-2" v-for="product in store.state.cart">
-            <div class="row d-flex justify-content-between align-items-center">
-              <div class="d-flex justify-content-between p-1">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                  class="img-fluid rounded-3 col-6" alt="Cotton T-shirt" />
-                <div class="col-6 text-center p-1 d-flex flex-column justify-content-between">
+          <div class="card single-product rounded-3 mb-2 d-block" v-for="product in  store.state.cart ">
+            <div class="row d-flex single-product justify-content-between align-items-center">
+              <div class="d-flex justify-content-between h-100 p-1">
+                <div class="img-container" v-if="product.image_path">
+                  <img :src="`${store.apiBaseUrl}/${product.image_path[0]}`" class="d-block  rounded-3 "
+                    :alt="product.name" />
+
+                </div>
+                <div class="col-6 text-center h-100 p-1 d-flex flex-column justify-content-between">
                   <p class="lead fw-normal mb-2">{{ product.name }}</p>
 
                   <!-- aggiungere funzione productMultiplier -->
                   <h5 class="mt-0 mb-3">
                     &euro;<span class="price">{{ product.price }}</span>
                   </h5>
-                  <div class="position-absolute error-quantity" v-if="product.quantity == 0">La quantita non può essere 0
+                  <div class="position-absolute error-quantity" v-if="product.quantity == 0">La quantita non può essere
+                    0
                     o negativa</div>
                   <div class="d-flex">
                     <div class="p-2" @click="store.decrement(product)">
@@ -117,6 +121,23 @@ export default {
 <style lang="scss" scoped>
 @use "../style/general.scss" as *;
 @use "../style/partials/variables" as *;
+
+.single-product {
+
+  // max-height: 170px;
+  .img-container {
+    width: 170px;
+    height: 170px;
+
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+}
+
 
 .error-quantity {
   color: red;
