@@ -96,41 +96,44 @@ export default {
 
         <!-- MENU -->
         <div class="ms-menu mt-5 d-flex">
-            <div class="justify-content-center">
+            <div class="justify-content-center  flex-grow-1">
 
                 <h2 class="text-center mt-3">I nostri prodotti</h2>
-                <div class="row justify-content-center p-1">
-                    <div class="col-12 rounded row my-1 p-1"
+                <div class="row justify-content-center p-1 ">
+                    <div class="col-12 rounded row my-1 p-1 "
                         :class="product.visibility ? 'single-product' : 'product-unaviable'"
                         v-for="(product, index) in products" :key="index">
                         <div class="col-lg-4 col-md-6 col-sm-12">
 
-                            <div v-if="product.image_path" class="carousel slide" :id="'carouselExampleControls-' + index"
-                                data-bs-ride="carousel">
-                                <div class="carousel-inner">
+                            <div class="carousel slide" :id="'carouselExampleControls-' + index" data-bs-ride="carousel">
+                                <div v-if="product.image_path" class="carousel-inner">
                                     <div class="carousel-item" v-for="(image, imageIndex) in product.image_path"
                                         :class="{ 'active': imageIndex === 0 }">
                                         <img :src="`${store.apiBaseUrl}/${image}`" class="d-block w-100 rounded-3"
                                             alt="...">
+
                                     </div>
                                 </div>
+                                <div v-else class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="../assets/img/pizza_ph.jpg" class="d-block w-100 rounded-3" alt="...">
+                                    </div>
+                                </div>
+
                                 <button class="carousel-control-prev" type="button"
-                                    :class="product.image_path.length > 1 ? '' : 'd-none'"
+                                    :class="product.image_path && product.image_path.length > 1 ? '' : 'd-none'"
                                     :data-bs-target="'#carouselExampleControls-' + index" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
                                 <button class="carousel-control-next" type="button"
-                                    :class="product.image_path.length > 1 ? '' : 'd-none'"
+                                    :class="product.image_path && product.image_path.length > 1 ? '' : 'd-none'"
                                     :data-bs-target="'#carouselExampleControls-' + index" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
                             </div>
-                            <div v-else>
-                                <img src="../assets/img/pizza_ph.jpg" class="d-block w-100 rounded-3" alt="...">
 
-                            </div>
                         </div>
                         <div class="col-lg-8 col-md-6 col-sm-12 row">
                             <div class="col-lg-6 col-md-12 col-sm-12 d-flex flex-column justify-content-between p-3">

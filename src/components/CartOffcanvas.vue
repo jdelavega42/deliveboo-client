@@ -25,10 +25,6 @@ export default {
 
     };
   },
-  // mounted() {
-  //   this.productMultiplier(), this.totalCart();
-  //   // this.store.state.total = this.store.state.cart.reduce((total, item) => total + parseFloat(item.price) * parseInt(item.quantity), 0);
-  // },
   computed: {
     totalCost() {
       let cost = this.store.state.cart.reduce(
@@ -49,7 +45,7 @@ export default {
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      <h3 class="offcanvas-title fw-normal mb-0 text-black">Shopping Cart</h3>
+      <h3 class="offcanvas-title fw-normal mb-0 text-black">Carrello</h3>
     </div>
     <!-- lorem -->
     <div class="offcanvas-body">
@@ -100,7 +96,7 @@ export default {
 
           <div class="card p-1 mt-4">
             <div class="d-flex justify-content-around align-items-center">
-              <p class="lead fw-normal mb-2">Your Order</p>
+              <p class="lead fw-normal mb-2">Il tuo ordine</p>
 
               <!-- aggiungere funzione productMultiplier -->
               <h5>
@@ -124,7 +120,6 @@ export default {
 
 .single-product {
 
-  // max-height: 170px;
   .img-container {
     width: 170px;
     height: 170px;
