@@ -63,9 +63,27 @@ export default {
                 this.store.updateLocalStorage();
 
             } else if (this.quantity[index] > 0 && this.store.state.cart[0] && product.restaurant_id != this.store.state.cart[0].restaurant_id) {
-                alert('Puoi inserire prodotti di un solo ristorante, aggiungi altro di ' + this.restaurant.name + ' o rimuovili')
+                // alert('Puoi inserire prodotti di un solo ristorante, aggiungi altro di ' + this.restaurant.name + ' o rimuovili')
+                let modal = document.getElementById('errorCart')
+                modal.classList.add('d-block')
+
+
+
             }
+        },
+        closeModal() {
+            let modal = document.getElementById('errorCart')
+            modal.classList.remove('d-block')
+        },
+        removeCart() {
+            this.closeModal()
+            this.store.state.cart = []
+            this.store.updateLocalStorage()
+            this.store.state.ordable = false;
+
+
         }
+
     },
     //   },
 };
@@ -173,7 +191,9 @@ export default {
                                         </div>
                                     </div>
                                     <div>
-                                        <div v-if="product.visibility" @click="addToCart(product, index)">
+                                        <div v-if="product.visibility"
+                                            :data-bs-toggle="this.quantity[index] > 0 && this.store.state.cart[0] && product.restaurant_id != this.store.state.cart[0].restaurant_id ? 'modal' : ''"
+                                            data-bs-target="#errorCart" @click="addToCart(product, index)">
                                             <span class="add-cart">Aggiungi al carrello <i
                                                     class="fa-solid fa-cart-plus"></i></span>
                                         </div>
@@ -190,6 +210,28 @@ export default {
             </div>
         </div>
 
+    </div>
+
+    <!-- MODAL -->
+
+    <div class="modal fade" id="errorCart" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="errorCart" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Attenzione</h1>
+                </div>
+                <div class="modal-body">
+                    Puoi ordinare solo da un ristorante alla volta
+                </div>
+                <div class="modal-footer">
+                    <button type="button" @click="removeCart()" data-bs-dismiss="modal" class="btn btn-danger">Svuota
+                        carrello</button>
+                    <button type="button" @click="closeModal()" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Chiudi</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

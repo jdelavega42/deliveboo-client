@@ -81,9 +81,10 @@
               <div id="cvv" class="form-control"></div>
             </div>
           </div>
-          <p id="card-message" class="d-none">Controlla i campi della carta di credito</p>
+          <p id="card-message" class="d-none  text-danger fw-bold mt-2">Controlla i campi della carta di
+            credito</p>
         </div>
-        <button class="btn btn-primary btn-block mt-4" :data-bs-toggle="store.state.ordable ? '' : 'modal'"
+        <button class="btn btn-primary btn-block mt-2" :data-bs-toggle="store.state.ordable ? '' : 'modal'"
           data-bs-target="#errorPayment" @click.prevent="payWithCreditCard">Paga ora</button>
       </form>
       <div v-if="this.loading"
@@ -111,7 +112,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+
         </div>
       </div>
     </div>
@@ -216,8 +217,6 @@ export default {
               this.loading = false;
 
             })
-          } else {
-            // alert('Le quantità dei prodotti devono essere maggiori di 0');
           }
         })
           .catch(err => {

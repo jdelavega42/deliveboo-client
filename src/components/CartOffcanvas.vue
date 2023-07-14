@@ -104,9 +104,17 @@ export default {
               </h5>
             </div>
             <router-link :to="store.state.ordable ? { name: 'order' } : '#'" class="btn btn-success btn-block btn-lg"
-              :class="store.state.ordable ? 'btn-success' : 'btn-danger'">Checkout</router-link>
-            <router-link :to="{ name: 'home' }" class="btn btn-success btn-block btn-lg">Continua con gli
-              acquisti</router-link>
+              :class="store.state.ordable ? 'btn-success' : 'btn-danger'">
+              <div :data-bs-dismiss="store.state.ordable ? 'offcanvas' : ''">
+                Checkout
+              </div>
+            </router-link>
+            <router-link :to="{ name: 'home' }" class="btn btn-success btn-block btn-lg">
+              <div data-bs-dismiss="offcanvas">
+                Continua con gli
+                acquisti
+              </div>
+            </router-link>
           </div>
         </div>
       </div>
