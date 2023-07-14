@@ -80,9 +80,31 @@
             <div id="cvv" class="form-control"></div>
           </div>
         </div>
+        <p id="card-message" class="d-none">Controlla i campi della carta di credito</p>
       </div>
-      <button class="btn btn-primary btn-block mt-4" @click.prevent="payWithCreditCard">Paga ora</button>
+      <button class="btn btn-primary btn-block mt-4" :data-bs-toggle="store.state.ordable ? '' : 'modal'"
+        data-bs-target="#errorPayment" @click.prevent="payWithCreditCard">Paga ora</button>
     </form>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal fade" :class="store.state.ordable ? 'd-none' : ''" id="errorPayment" tabindex="-1"
+    aria-labelledby="errorPayment" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Attenzione</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Il tuo carrello è vuoto
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -152,7 +174,17 @@ export default {
       });
     },
     payWithCreditCard() {
-      if (this.hostedFieldInstance) {
+      if (!this.hostedFieldInstance._state.fields.cvv.isValid || !this.hostedFieldInstance._state.fields.number.isValid || !this.hostedFieldInstance._state.fields.expirationDate.isValid) {
+        // alert('carta di creduto')
+        console.log(this.hostedFieldInstance._state.fields.cvv.isValid);
+        let error = document.getElementById('card-message')
+        error.classList.remove('d-none')
+
+      }
+      else if (this.hostedFieldInstance) {
+        let error = document.getElementById('card-message')
+        error.classList.add('d-none')
+
         this.hostedFieldInstance.tokenize().then(payload => {
           if (this.store.state.ordable) {
             axios.post('http://127.0.0.1:8000/api/payment', {
@@ -171,7 +203,7 @@ export default {
 
             })
           } else {
-            alert('Le quantità dei prodotti devono essere maggiori di 0');
+            // alert('Le quantità dei prodotti devono essere maggiori di 0');
           }
         })
           .catch(err => {
