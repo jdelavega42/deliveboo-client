@@ -92,17 +92,25 @@ export default {
 <template>
     <div class="container">
         <!-- RESTAURANT INFO -->
-        <div class="row">
+        <div class="row mt-5">
             <!-- NAME AND MORE INFO -->
             <div class="col-lg-6 col-md-12 col-sm-12 restaurant-info restaurant-name">
-                <div class="text-light p-4">
-                    <h2 class="fs-1 fw-bolder text-uppercase text-light">{{ restaurant.name }}</h2>
-                    <ul class="text-wrap">
-                        <li v-for="cooking in restaurant.cookings" class="mx-1">{{ cooking.name }}</li>
+                <div class="text-light p-5">
+                    <h2 class="fs-1 fw-bolder text-uppercase text-light my-3">{{ restaurant.name }}</h2>
+                    <ul>
+                        <li class="d-block">
+                            <span v-for="cooking in restaurant.cookings" class="badge rounded-pils text-bg-danger m-1">{{ cooking.name }}</span>
+                        </li>
+                        <li class="d-block">
+                            <p class="fs-5">Partita IVA: {{ restaurant.PIVA }}</p>
+                        </li>
+                        <li class="d-block">
+                            <p class="fs-5">Indirizzo: {{ restaurant.address }}</p>
+                        </li>
+                        <li class="d-block">
+                            <p class="fs-5">Telefono: {{ restaurant.number }}</p>
+                        </li>
                     </ul>
-                    <p class="fs-3">Partita IVA: {{ restaurant.PIVA }}</p>
-                    <p class="fs-3">Indirizzo: {{ restaurant.address }}</p>
-                    <p class="fs-3">Telefono: {{ restaurant.number }}</p>
                 </div>
             </div>
             <!-- IMAGES -->
@@ -116,7 +124,7 @@ export default {
         <div class="ms-menu mt-5 d-flex">
             <div class="justify-content-center  flex-grow-1">
 
-                <h2 class="text-center mt-3">I nostri prodotti</h2>
+                <h2 class="mt-5 fs-3 fw-bolder text-center text-uppercase">I nostri prodotti</h2>
                 <div class="row justify-content-center p-1 ">
                     <div class="col-12 rounded row my-1 p-1 "
                         :class="product.visibility ? 'single-product' : 'product-unaviable'"
@@ -161,9 +169,9 @@ export default {
                                     <div class="description d-flex justify-content-between align-items-center">
                                         <span>Descrizione: {{ product.description }}</span>
                                         <span v-if="product.visibility"
-                                            class="border border-success text-success p-1 rounded-1">Prodotto
-                                            disponibile</span>
-                                        <span v-else class="border border-danger text-danger p-1 rounded-1">Prodotto non
+                                            class="border border-success text-success p-1 rounded-1">
+                                            Disponibile</span>
+                                        <span v-else class="border border-danger text-danger p-1 rounded-1">Non
                                             disponibile</span>
                                     </div>
                                 </div>
@@ -219,7 +227,7 @@ export default {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Attenzione</h1>
+                    <h2 class="modal-title fs-5" id="staticBackdropLabel">Attenzione</h2>
                 </div>
                 <div class="modal-body">
                     Puoi ordinare solo da un ristorante alla volta
@@ -241,7 +249,7 @@ export default {
 @use "../style/partials/variables" as *;
 
 .restaurant-info {
-    height: 500px;
+    height: 350px;
 }
 
 .restaurant-name {
@@ -269,13 +277,6 @@ h2 {
     opacity: 0.5;
 }
 
-ul {
-    list-style: none;
-
-    li {
-        display: inline-block;
-    }
-}
 
 .single-product {
     border: 2px solid $primary-green;
@@ -296,7 +297,7 @@ ul {
     color: black;
 
     &:hover {
-        transform: translateX(10px) scale(1.1);
+        transform: translateX(10px) scale(1.05);
         box-shadow: 0 5px 10px rgba(0, 0, 0, 1), -5px 0 10px rgba(0, 0, 0, 1);
         background-color: $primary-green;
         color: white;

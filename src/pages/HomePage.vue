@@ -7,7 +7,6 @@ export default {
     return {
       cookings: [],
       restaurants: [],
-      // cookingType: null,
       loading: null,
       message: null,
       params: [],
@@ -67,43 +66,55 @@ export default {
 
 <template>
   <div class="container">
+
     <!-- COOKINGS TYPE -->
-    <h1 class="text-center m-2">COSA TI VA OGGI?</h1>
-    <div class="cookings-list row">
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center" v-for="cooking in cookings">
-        <div
-          class="cooking-type p-3 m-3 rounded"
-          :class="{ 'bg-red': params.includes(cooking.name) }"
-          role="button"
-          @click="getParams(cooking.name), getRestaurants()"
-        >
-          {{ cooking.name }}
+    <div>
+      <h2 class="fs-1 fw-bolder border-bottom border-danger text-success text-center my-5 text-uppercase">Cosa ti va oggi?</h2>
+      <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-2 text-center p-3" v-for="cooking in cookings">
+          <span class="btn btn-outline-danger border-3 rounded text-capitalize fw-bold w-100 py-3 shadow"
+            :class="{ 'btn-danger text-white': params.includes(cooking.name) }" role="button"
+            @click="getParams(cooking.name), getRestaurants()">
+            {{ cooking.name }}
+          </span>
         </div>
       </div>
     </div>
 
     <!-- RESTAURANTS LIST -->
-    <div class="restaurants-list" v-if="loading != null">
-      <h1 class="text-center mt-4">I nostri ristoranti</h1>
+    <div v-if="loading != null">
+      <h2 class="fs-1 fw-bolder border-bottom border-danger text-success text-center text-uppercase my-5">I nostri ristoranti</h2>
+      <div v-if="loading" class="mt-5 fs-3 fw-bolder text-center text-uppercase">caricamento</div>
 
-      <div v-if="loading" class="text-center">CARICAMENTO</div>
+      <h2 class="fs-3">{{ message }}</h2>
+      <div class="row justify-content-center">
 
-      <h2 class="text-center">{{ message }}</h2>
+        <template v-for="restaurant in restaurants">
+          <div class="col-lg-4 col-md-6 col-sm-12 p-3">
+            <router-link :to="{ name: 'restaurant', params: { slug: restaurant.slug } }" role="button"
+              class="ms-hover card text-center p-0 text-decoration-none shadow-lg border border-success border-2">
 
-      <div class="restaurants-list row justify-content-center">
-        <router-link
-          :to="{ name: 'restaurant', params: { slug: restaurant.slug } }"
-          class="col-6 col-sm-4 col-md-3 col-lg-2 m-3 text-center restaurant rounded"
-          role="button"
-          v-for="restaurant in restaurants"
-        >
-          <div>{{ restaurant.name }}</div>
-
-          <div class="cookings" v-for="cooking in restaurant.cookings">
-            {{ cooking.name }}
+              <p class="card-header fs-3 fw-bolder bg-success text-white">{{ restaurant.name }}</p>
+              <ul class="list-group border border-0">
+                <li class="list-group-item fs-5">
+                  <span v-for="cooking in restaurant.cookings" class="badge rounded-pils text-bg-danger m-1">{{
+                    cooking.name }}</span>
+                </li>
+                <li class="list-group-item">
+                  {{ restaurant.address }}
+                </li>
+                <li class="list-group-item">
+                  {{ restaurant.number }}
+                </li>
+                <li class="list-group-item">
+                  {{ restaurant.email }}
+                </li>
+              </ul>
+            </router-link>
           </div>
-        </router-link>
+        </template>
       </div>
+
     </div>
   </div>
 </template>
@@ -112,64 +123,10 @@ export default {
 @use "../style/general.scss" as *;
 @use "../style/partials/variables" as *;
 
-h1 {
-  color: $primary-green;
-  font-weight: bold;
+.ms-hover {
+  transition: 200ms;
 }
 
-h2 {
-  color: $primary-green;
-}
-
-.cookings-list {
-  color: $primary-red;
-
-  .cooking-type {
-    border: 2px solid $primary-red;
-    text-transform: capitalize;
-    font-size: 1.5rem;
-  }
-
-  .bg-red {
-    color: white;
-    background-color: $primary-red;
-  }
-}
-
-.cooking-type:hover {
-  color: white;
-  background-color: $primary-red;
-}
-
-.restaurant {
-  color: $primary-red;
-  border: 2px solid $primary-red;
-  text-transform: capitalize;
-  font-size: 1.5rem;
-  text-decoration: none;
-
-  .cookings {
-    font-size: 1rem;
-    color: black;
-  }
-}
-
-.restaurant:hover {
-  background-color: $primary-red;
-  color: white;
-
-  .cookings {
-    color: white;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1rem;
-  }
-
-  h2 {
-    font-size: 1rem;
-  }
-}
-</style>
+.ms-hover:hover {
+  transform: scale(1.05);
+}</style>
