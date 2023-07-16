@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Payment Form</h1>
+    <h2 class="text-success mt-5 fs-3 fw-bolder text-center text-uppercase">Pagamento</h2>
     <table class="table">
       <thead>
         <tr>
@@ -19,7 +19,7 @@
               <div class="p-2" @click="store.decrement(product)">
                 <i class="fa-solid fa-minus"></i>
               </div>
-              <input id="form1" min="1" name="quantity" type="number" class="text-center form-control form-control-sm"
+              <input id="form1" min="1" name="quantity" type="number" class="text-center form-control form-control-sm w-50"
                 :class="product.quantity > 0 ? '' : 'is-invalid'" :value="product.quantity"
                 @input="store.updateQuantity(product, $event)" />
               <div class="p-2" @click="store.increment(product)">
@@ -84,7 +84,7 @@
           <p id="card-message" class="d-none  text-danger fw-bold mt-2">Controlla i campi della carta di
             credito</p>
         </div>
-        <button class="btn btn-primary btn-block mt-2" :data-bs-toggle="store.state.ordable ? '' : 'modal'"
+        <button class="btn btn-primary btn-block my-2" :data-bs-toggle="store.state.ordable ? '' : 'modal'"
           data-bs-target="#errorPayment" @click.prevent="payWithCreditCard">Paga ora</button>
       </form>
       <div v-if="this.loading"
