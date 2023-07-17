@@ -142,7 +142,7 @@ export default {
                                 </div>
                                 <div v-else class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="../assets/img/pizza_ph.jpg" class="d-block w-100 rounded-3" alt="...">
+                                        <img src="../assets/img/images.png" class="d-block w-100 rounded-3" alt="...">
                                     </div>
                                 </div>
 
