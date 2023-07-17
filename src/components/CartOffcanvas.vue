@@ -60,6 +60,9 @@ export default {
                     :alt="product.name" />
 
                 </div>
+                <div class="img-container" v-else>
+                  <img src="../assets/img/images.png" alt="default-img" class="d-block  rounded-3 ">
+                </div>
                 <div class="col-6 text-center h-100 p-1 d-flex flex-column justify-content-between">
                   <p class="lead fw-normal mb-2">{{ product.name }}</p>
 
