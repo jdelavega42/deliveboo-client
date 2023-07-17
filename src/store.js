@@ -59,5 +59,6 @@ export const store = reactive({
         }
         this.updateLocalStorage();
     }
+    
 });
 

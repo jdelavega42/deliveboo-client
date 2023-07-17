@@ -19,9 +19,9 @@
               <div class="p-2" @click="store.decrement(product)">
                 <i class="fa-solid fa-minus"></i>
               </div>
-              <input id="form1" min="1" name="quantity" type="number" class="text-center form-control form-control-sm w-50"
-                :class="product.quantity > 0 ? '' : 'is-invalid'" :value="product.quantity"
-                @input="store.updateQuantity(product, $event)" />
+              <input id="form1" min="1" name="quantity" type="number"
+                class="text-center form-control form-control-sm w-50" :class="product.quantity > 0 ? '' : 'is-invalid'"
+                :value="product.quantity" @input="store.updateQuantity(product, $event)" />
               <div class="p-2" @click="store.increment(product)">
                 <i class="fa-solid fa-plus"></i>
               </div>
@@ -42,35 +42,41 @@
 
 
     <div class="position-relative">
-      <form class="">
+      <form>
 
         <hr />
         <div class="">
-          <div class="email d-inline-block w-50 pe-2">
-            <label for="exampleFormControlInput3" class="form-label">Nome <span class="text-danger">*</span></label>
-            <input v-model="name" type="text" class="form-control" id="exampleFormControlInput3">
+          <div class="email d-inline-block w-50 pe-2 py-2">
+            <label for="inputName" class="form-label">Nome <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="messageName">Campo non corretto</span></label>
+            <input required v-model="name" type="text" class="form-control" id="inputName">
+            
           </div>
-          <div class="phone d-inline-block w-50 ps-2">
-            <label for="exampleFormControlInput4" class="form-label">Indirizzo <span class="text-danger">*</span></label>
-            <input v-model="address" type="text" class="form-control" id="exampleFormControlInput4" maxlength="25">
+          <div class="phone d-inline-block w-50 ps-2 py-2">
+            <label for="inputAddress" class="form-label">Indirizzo <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="messageAddress">Campo non corretto</span></label>
+            <input required v-model="address" type="text" class="form-control" id="inputAddress" maxlength="25">
+            
           </div>
         </div>
         <div class="">
-          <div class="email d-inline-block w-50 pe-2">
-            <label for="exampleFormControlInput1" class="form-label">Email <span class="text-danger">*</span></label>
-            <input v-model="email" type="email" class="form-control" id="exampleFormControlInput1"
-              placeholder="name@example.com">
+          <div class="email d-inline-block w-50 pe-2 py-2">
+            <label for="inputEmail" class="form-label">Email <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="messageEmail">Campo non corretto</span></label>
+            <input required v-model="email" type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
+            
+
           </div>
-          <div class="phone d-inline-block w-50 ps-2">
-            <label for="exampleFormControlInput2" class="form-label">Telefono <span class="text-danger">*</span></label>
-            <input v-model="phone" type="text" class="form-control" id="exampleFormControlInput2" maxlength="11">
+          <div class="phone d-inline-block w-50 ps-2 py-2">
+            <label for="inputPhone" class="form-label">Telefono <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="messagePhone">Campo non corretto</span></label>
+            <input required v-model="phone" type="text" class="form-control" id="inputPhone" maxlength="11">
+            
+
           </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Numero carta di credito <span class="text-danger">*</span></label>
+        <div class="form-group py-2">
+          <label class="form-label">Numero carta di credito <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="credit-message">Controlla i campi della carta di
+            credito</span></label>
           <div id="creditCardNumber" class="form-control"></div>
         </div>
-        <div class="form-group">
+        <div class="form-group py-2">
           <div class="row">
             <div class="col-6">
               <label class="form-label">Scadenza <span class="text-danger">*</span></label>
@@ -81,11 +87,9 @@
               <div id="cvv" class="form-control"></div>
             </div>
           </div>
-          <p id="card-message" class="d-none  text-danger fw-bold mt-2">Controlla i campi della carta di
-            credito</p>
         </div>
         <button class="btn btn-primary btn-block my-2" :data-bs-toggle="store.state.ordable ? '' : 'modal'"
-          data-bs-target="#errorPayment" @click.prevent="payWithCreditCard">Paga ora</button>
+          data-bs-target="#errorPayment" @click.prevent="payWithCreditCard" id="submit">Paga ora</button>
       </form>
       <div v-if="this.loading"
         class="d-flex justify-content-center align-items-center position-absolute w-100 h-100 bg-white bg-opacity-50 top-50 start-50 translate-middle">
@@ -186,43 +190,80 @@ export default {
       });
     },
     payWithCreditCard() {
-      if (!this.hostedFieldInstance._state.fields.cvv.isValid || !this.hostedFieldInstance._state.fields.number.isValid || !this.hostedFieldInstance._state.fields.expirationDate.isValid) {
-        let error = document.getElementById('card-message')
-        error.classList.remove('d-none')
-
-      }
-      else if (this.hostedFieldInstance) {
-        let error = document.getElementById('card-message')
-        error.classList.add('d-none')
-        this.loading = true;
-
-
-        this.hostedFieldInstance.tokenize().then(payload => {
-          if (this.store.state.ordable) {
-            axios.post('http://127.0.0.1:8000/api/payment', {
-              "token": payload.nonce,
-              "products": this.productForPay,
-              "name": this.name,
-              "phone": this.phone,
-              "email": this.email,
-              "address": this.address
-            }).then(resp => {
-              this.store.state.cart = [];
-              this.store.updateLocalStorage();
-              this.store.ordable();
-              this.$router.push('/state');
-
-
-            }).finally(() => {
-              this.loading = false;
-
-            })
-          }
-        })
-          .catch(err => {
-            console.error(err);
+      const submit = document.getElementById('submit');
+      const inputName = document.getElementById('inputName');
+      const inputAddress = document.getElementById('inputAddress');
+      const inputEmail = document.getElementById('inputEmail');
+      const inputPhone = document.getElementById('inputPhone');
+      const messageName = document.getElementById('messageName');
+      const messageAddress = document.getElementById('messageAddress');
+      const messageEmail = document.getElementById('messageEmail');
+      const messagePhone = document.getElementById('messagePhone');
+      const error = document.getElementById('credit-message');
+      submit.addEventListener('click', event => {
+        if(inputName.value == null || inputName.value== ''){
+          event.preventDefault();
+          messageName.classList.remove('d-none');
+        } else{
+          messageName.classList.add('d-none');
+        };
+        if(inputAddress.value == null || inputAddress.value== ''){
+          event.preventDefault();
+          messageAddress.classList.remove('d-none');
+        } else{
+          messageAddress.classList.add('d-none');
+        };
+        if(inputEmail.value == null || inputEmail.value== ''){
+          event.preventDefault();
+          messageEmail.classList.remove('d-none');
+        } else{
+          messageEmail.classList.add('d-none');
+        };
+        if(inputPhone.value == null || inputPhone.value== ''){
+          event.preventDefault();
+          messagePhone.classList.remove('d-none');
+        } else{
+          messagePhone.classList.add('d-none');
+        };
+        if (!this.hostedFieldInstance._state.fields.cvv.isValid || !this.hostedFieldInstance._state.fields.number.isValid || !this.hostedFieldInstance._state.fields.expirationDate.isValid) {
+          // let error = document.querySelectorAll('.credit-message');
+          error.classList.remove('d-none');
+  
+        }
+        else if (this.hostedFieldInstance) {
+          // let error = document.querySelectorAll('.credit-message');
+          console.log(error);
+          error.classList.add('d-none')
+          this.loading = true;
+  
+  
+          this.hostedFieldInstance.tokenize().then(payload => {
+            if (this.store.state.ordable) {
+              axios.post('http://127.0.0.1:8000/api/payment', {
+                "token": payload.nonce,
+                "products": this.productForPay,
+                "name": this.name,
+                "phone": this.phone,
+                "email": this.email,
+                "address": this.address
+              }).then(resp => {
+                this.store.state.cart = [];
+                this.store.updateLocalStorage();
+                this.store.ordable();
+                this.$router.push('/state');
+  
+  
+              }).finally(() => {
+                this.loading = false;
+  
+              })
+            }
           })
-      }
+            .catch(err => {
+              console.error(err);
+            })
+        }
+      })
     }
   }
 }
