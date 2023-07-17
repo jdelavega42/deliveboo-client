@@ -70,10 +70,7 @@ export default {
                   <h5 class="mt-0 mb-3">
                     &euro;<span class="price">{{ product.price }}</span>
                   </h5>
-                  <div class="position-absolute error-quantity" v-if="product.quantity == 0">La quantita non può essere
-                    0
-                    o negativa</div>
-                  <div class="d-flex">
+                  <div class="d-flex position-relative">
                     <div class="p-2" @click="store.decrement(product)">
                       <i class="fa-solid fa-minus"></i>
                     </div>
@@ -87,6 +84,8 @@ export default {
                       <i class="fa-solid fa-plus"></i>
                     </div>
                   </div>
+                  <div class="bottom-0 error-quantity" v-if="product.quantity == 0">La quantita non può essere 0 o
+                    negativa</div>
                   <div class="btn w-100 btn-outline-danger" @click="store.deleteCartProduct(product)">
                     <i class="fas fa-trash"></i>
                   </div>
@@ -112,12 +111,11 @@ export default {
                 Checkout
               </div>
             </router-link>
-            <router-link :to="{ name: 'home' }" class="btn btn-success btn-block btn-lg">
-              <div data-bs-dismiss="offcanvas">
-                Continua con gli
-                acquisti
-              </div>
-            </router-link>
+            <div class="btn btn-success btn-block btn-lg" data-bs-dismiss="offcanvas">
+              Continua con gli
+              acquisti
+            </div>
+
           </div>
         </div>
       </div>
@@ -147,7 +145,7 @@ export default {
 
 .error-quantity {
   color: red;
-  top: 53px;
+  top: 40px;
   font-size: 0.8rem;
 }
 </style>
