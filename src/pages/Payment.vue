@@ -71,19 +71,21 @@
 
           </div>
         </div>
-        <div class="form-group py-2">
-          <label class="form-label">Numero carta di credito <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="credit-message">Controlla i campi della carta di
+        <div class="form-group pt-2">
+          <label class="form-label">Numero carta di credito <span class="text-danger">*</span><span class="credit-message d-none text-danger fw-bold mt-2">Controlla i campi della carta di
             credito</span></label>
           <div id="creditCardNumber" class="form-control"></div>
         </div>
-        <div class="form-group py-2">
+        <div class="form-group">
           <div class="row">
             <div class="col-6">
-              <label class="form-label">Scadenza <span class="text-danger">*</span></label>
+              <label class="form-label">Scadenza <span class="text-danger">*</span><span class="credit-message d-none text-danger fw-bold mt-2">Controlla i campi della carta di
+            credito</span></label>
               <div id="expireDate" class="form-control"></div>
             </div>
             <div class="col-6">
-              <label class="form-label">CVV <span class="text-danger">*</span></label>
+              <label class="form-label">CVV <span class="text-danger">*</span><span class="credit-message d-none text-danger fw-bold mt-2">Controlla i campi della carta di
+            credito</span></label>
               <div id="cvv" class="form-control"></div>
             </div>
           </div>
@@ -199,7 +201,7 @@ export default {
       const messageAddress = document.getElementById('messageAddress');
       const messageEmail = document.getElementById('messageEmail');
       const messagePhone = document.getElementById('messagePhone');
-      const error = document.getElementById('credit-message');
+      const error = document.querySelectorAll('.credit-message');
       submit.addEventListener('click', event => {
         if(inputName.value == null || inputName.value== ''){
           event.preventDefault();
@@ -222,18 +224,22 @@ export default {
         if(inputPhone.value == null || inputPhone.value== ''){
           event.preventDefault();
           messagePhone.classList.remove('d-none');
+          console.log(error);
         } else{
           messagePhone.classList.add('d-none');
         };
         if (!this.hostedFieldInstance._state.fields.cvv.isValid || !this.hostedFieldInstance._state.fields.number.isValid || !this.hostedFieldInstance._state.fields.expirationDate.isValid) {
-          // let error = document.querySelectorAll('.credit-message');
-          error.classList.remove('d-none');
+          for(let index = 0; index < error.length; index++){
+            error[index].classList.remove('d-none');
+          }
+          // error.classList.remove('d-none');
   
         }
         else if (this.hostedFieldInstance) {
-          // let error = document.querySelectorAll('.credit-message');
-          console.log(error);
-          error.classList.add('d-none')
+          for(let index = 0; index < error.length; index++){
+            error[index].classList.add('d-none');
+          }
+          // error.classList.add('d-none')
           this.loading = true;
   
   
