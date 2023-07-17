@@ -32,8 +32,8 @@ export default {
           total + parseFloat(item.price) * parseInt(item.quantity),
         0
       );
-      this.store.state.total = cost;
-      return cost;
+      this.store.state.total = cost.toFixed(2);
+      return this.store.state.total;
     },
   },
 
