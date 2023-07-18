@@ -47,45 +47,51 @@
         <hr />
         <div class="">
           <div class="email d-inline-block w-50 pe-2 py-2">
-            <label for="inputName" class="form-label">Nome <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="messageName">Campo non corretto</span></label>
+            <label for="inputName" class="form-label">Nome <span class="text-danger">*</span><span
+                class="d-none text-danger fw-bold mt-2" id="messageName">Campo obbligatorio</span></label>
             <input required v-model="name" type="text" class="form-control" id="inputName">
-            
+
           </div>
           <div class="phone d-inline-block w-50 ps-2 py-2">
-            <label for="inputAddress" class="form-label">Indirizzo <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="messageAddress">Campo non corretto</span></label>
+            <label for="inputAddress" class="form-label">Indirizzo <span class="text-danger">*</span><span
+                class="d-none text-danger fw-bold mt-2" id="messageAddress">Campo obbligatorio</span></label>
             <input required v-model="address" type="text" class="form-control" id="inputAddress" maxlength="25">
-            
+
           </div>
         </div>
         <div class="">
           <div class="email d-inline-block w-50 pe-2 py-2">
-            <label for="inputEmail" class="form-label">Email <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="messageEmail">Campo non corretto</span></label>
-            <input required v-model="email" type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
-            
+            <label for="inputEmail" class="form-label">Email <span class="text-danger">*</span><span
+                class="d-none text-danger fw-bold mt-2" id="messageEmail">Inserisci una mail valida</span></label>
+            <input required v-model="email" type="email" class="form-control" id="inputEmail"
+              placeholder="name@example.com">
+
 
           </div>
           <div class="phone d-inline-block w-50 ps-2 py-2">
-            <label for="inputPhone" class="form-label">Telefono <span class="text-danger">*</span><span class="d-none text-danger fw-bold mt-2" id="messagePhone">Campo non corretto</span></label>
-            <input required v-model="phone" type="text" class="form-control" id="inputPhone" maxlength="11">
-            
+            <label for="inputPhone" class="form-label">Telefono <span class="text-danger">*</span><span
+                class="d-none text-danger fw-bold mt-2" id="messagePhone">Inserisci un numero di telefono valido</span></label>
+            <input required v-model="phone" type="text" class="form-control" id="inputPhone" maxlength="15">
+
 
           </div>
         </div>
         <div class="form-group pt-2">
-          <label class="form-label">Numero carta di credito <span class="text-danger">*</span><span class="credit-message d-none text-danger fw-bold mt-2">Controlla i campi della carta di
-            credito</span></label>
+          <label class="form-label">Numero carta di credito <span class="text-danger">*</span><span
+              class="credit-message d-none text-danger fw-bold mt-2">Controlla i campi della carta di
+              credito</span></label>
           <div id="creditCardNumber" class="form-control"></div>
         </div>
         <div class="form-group">
           <div class="row">
             <div class="col-6">
-              <label class="form-label">Scadenza <span class="text-danger">*</span><span class="credit-message d-none text-danger fw-bold mt-2">Controlla i campi della carta di
-            credito</span></label>
+              <label class="form-label">Scadenza <span class="text-danger">*</span><span
+                  class="credit-message d-none text-danger fw-bold mt-2">Controlla i dati della scadenza</span></label>
               <div id="expireDate" class="form-control"></div>
             </div>
             <div class="col-6">
-              <label class="form-label">CVV <span class="text-danger">*</span><span class="credit-message d-none text-danger fw-bold mt-2">Controlla i campi della carta di
-            credito</span></label>
+              <label class="form-label">CVV <span class="text-danger">*</span><span
+                  class="credit-message d-none text-danger fw-bold mt-2">Controlla il CVV</span></label>
               <div id="cvv" class="form-control"></div>
             </div>
           </div>
@@ -203,46 +209,56 @@ export default {
       const messagePhone = document.getElementById('messagePhone');
       const error = document.querySelectorAll('.credit-message');
       submit.addEventListener('click', event => {
-        if(inputName.value == null || inputName.value== ''){
+        if (inputName.value == null || inputName.value == ''|| inputName.value.length < 3) {
           event.preventDefault();
           messageName.classList.remove('d-none');
-        } else{
+        } else {
           messageName.classList.add('d-none');
         };
-        if(inputAddress.value == null || inputAddress.value== ''){
+        if (inputAddress.value == null || inputAddress.value == '' || inputAddress.value.length < 3){
           event.preventDefault();
           messageAddress.classList.remove('d-none');
-        } else{
+        } else {
           messageAddress.classList.add('d-none');
         };
-        if(inputEmail.value == null || inputEmail.value== ''){
-          event.preventDefault();
-          messageEmail.classList.remove('d-none');
-        } else{
-          messageEmail.classList.add('d-none');
-        };
-        if(inputPhone.value == null || inputPhone.value== ''){
-          event.preventDefault();
-          messagePhone.classList.remove('d-none');
-          console.log(error);
-        } else{
-          messagePhone.classList.add('d-none');
-        };
+        if (document.getElementById('inputEmail')) {
+      const inputEmail = document.getElementById('inputEmail');
+      const messageEmail = document.getElementById('messageEmail');
+      const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (mailformat.test(inputEmail.value)) {
+        messageEmail.classList.add('d-none');
+      } else {
+        event.preventDefault();
+        messageEmail.classList.remove('d-none');
+      }
+    }
+        if (document.getElementById('inputPhone')) {
+          const inputPhone = document.getElementById('inputPhone');
+          const messagePhone = document.getElementById('messagePhone');
+          const phoneno = /\b[\+]?[(]?[0-9]{2,6}[)]?[-\s\.]?[-\s\/\.0-9]{3,15}\b/m;
+          if (phoneno.test(inputPhone.value)) {
+            messagePhone.classList.add('d-none');
+          } else {
+            event.preventDefault();
+            messagePhone.classList.remove('d-none');
+          }
+        }
         if (!this.hostedFieldInstance._state.fields.cvv.isValid || !this.hostedFieldInstance._state.fields.number.isValid || !this.hostedFieldInstance._state.fields.expirationDate.isValid) {
-          for(let index = 0; index < error.length; index++){
+          event.preventDefault()
+          for (let index = 0; index < error.length; index++) {
             error[index].classList.remove('d-none');
           }
           // error.classList.remove('d-none');
-  
+
         }
         else if (this.hostedFieldInstance) {
-          for(let index = 0; index < error.length; index++){
+          for (let index = 0; index < error.length; index++) {
             error[index].classList.add('d-none');
           }
           // error.classList.add('d-none')
           this.loading = true;
-  
-  
+
+
           this.hostedFieldInstance.tokenize().then(payload => {
             if (this.store.state.ordable) {
               axios.post('http://127.0.0.1:8000/api/payment', {
@@ -257,11 +273,11 @@ export default {
                 this.store.updateLocalStorage();
                 this.store.ordable();
                 this.$router.push('/state');
-  
-  
+
+
               }).finally(() => {
                 this.loading = false;
-  
+
               })
             }
           })
